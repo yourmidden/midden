@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+<title>The hoard · midden</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icon-16.png">
+<link rel="icon" type="image/png" sizes="48x48" href="../assets/icon-48.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="home" href="../index.html"><div class="mark"></div><div class="name">midden</div></a>
+    <div class="links"><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a></div>
+  </nav>
+  <main class="page">
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="ml.html"><span>Previous</span>The models midden runs</a><a class="next" rel="next" href="overview.html"><span>Next</span>midden at a glance</a></nav>
+    <img class="scene" src="../assets/art/chest.svg" alt="" aria-hidden="true">
+<h1 id="the-hoard">The hoard</h1>
+<p>The hoard keeps what you lock away: passwords, two-factor secrets, private notes and identity documents. It&#39;s a separate extension that works alongside midden.</p>
+<h2 id="the-design">The design</h2>
+<ul>
+<li><strong>Two extensions, kept apart by the browser.</strong> midden takes in web pages, files and synced data all day. The hoard does none of that. Each has its own storage, and nothing in midden can read the hoard&#39;s storage, pages or memory.</li>
+<li><strong>One narrow connection.</strong> The hoard listens only to midden, and only for a short, fixed list of requests. No request gets a key, a password or a decrypted item back out.</li>
+<li><strong>Your master password is the way in.</strong> It unlocks a key that only ever leaves your device encrypted. We don&#39;t hold a copy, and midden never sees it.</li>
+</ul>
+<h2 id="how-it-works">How it works</h2>
+<ul>
+<li><strong>Encrypted before it&#39;s stored.</strong> Every item is encrypted on your device. All that stays readable is an item&#39;s random ID, its type, its dates, and a public label if you chose to set one.</li>
+<li><strong>Locked by default.</strong> The hoard locks itself when it&#39;s been idle and when your computer locks. While it&#39;s locked, nothing in your browser can read your items without the master password.</li>
+<li><strong>Filled only when you ask.</strong> A password goes only into the exact site it was saved for, over https, and only when you ask for it.</li>
+<li><strong>Carried, not opened.</strong> Backups and sync carry the hoard still encrypted. midden moves it without being able to read it.</li>
+<li><strong>Hard to lose by accident.</strong> A deleted item waits 30 days in a bin. An optional recovery key opens the hoard if you forget your master password.</li>
+</ul>
+<h2 id="what-it-doesn39t-protect-against">What it doesn&#39;t protect against</h2>
+<ul>
+<li>Malware on your machine, or a compromised browser, while the hoard is unlocked.</li>
+<li>The page you fill into: once a password is in a form, that page can read it.</li>
+<li>A forgotten master password, if you didn&#39;t make a recovery key.</li>
+<li>Someone who finds your recovery key: it opens the hoard without the password, by design.</li>
+</ul>
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="ml.html"><span>Previous</span>The models midden runs</a><a class="next" rel="next" href="overview.html"><span>Next</span>midden at a glance</a></nav>
+  </main>
+  <footer>
+    <span>midden</span><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a><a href="mailto:support@yourmidden.app">support@yourmidden.app</a>
+    <span class="right">This site has no trackers.</span>
+  </footer>
+</div>
+</body>
+</html>

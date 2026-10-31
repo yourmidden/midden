@@ -1,0 +1,35 @@
+name: Something's wrong
+description: Report a bug in midden.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issues here are public. Please don't paste anything from your own heap: no screenshots of your items, no notes, no links you saved. For anything private, write to support@yourmidden.app.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Settings, then About.
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where
+      options:
+        - Chrome
+        - Edge
+        - Android
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to make it happen again

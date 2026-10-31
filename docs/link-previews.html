@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Link previews · midden</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icon-16.png">
+<link rel="icon" type="image/png" sizes="48x48" href="../assets/icon-48.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="home" href="../index.html"><div class="mark"></div><div class="name">midden</div></a>
+    <div class="links"><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a></div>
+  </nav>
+  <main class="page">
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="links.html"><span>Previous</span>Links and where they came from</a><a class="next" rel="next" href="markdown.html"><span>Next</span>Markdown notes</a></nav>
+    <img class="scene" src="../assets/art/frame.svg" alt="" aria-hidden="true">
+<h1 id="link-previews">Link previews</h1>
+<p>A link card can show a picture: a screenshot of the page, when you sent it from the tab, or
+else the preview image the site names for link cards (<code>og:image</code> and the like). Getting that
+image means midden fetching from the open web on its own, which is the one thing midden does
+that you didn&#39;t directly ask for. This page describes what it fetches, what it refuses to
+reach, and what that doesn&#39;t cover.</p>
+<h2 id="when-it-fetches">When it fetches</h2>
+<ul>
+<li><strong>Only for a new link, once.</strong> A link gets one picture. The one
+exception is a screenshot, which a sharper screenshot of the same link replaces.</li>
+<li><strong>Only with the setting on and the browser&#39;s permission given.</strong> The setting (in the header
+menu) is on by default, but the extension can&#39;t fetch from sites until you allow it, which
+is Chrome&#39;s own prompt for the optional host permission. Until then a one-time notice offers
+the click. Off, or never allowed: no fetching at all, and screenshots aren&#39;t kept either.</li>
+<li><strong>A screenshot never fetches anything.</strong> It&#39;s the tab you were looking at.</li>
+<li><strong>Never for a link that carries a secret:</strong> a token, a signature, a password, or a
+one-time sign-in or reset path (the same link rules Bring in&#39;s secrets check uses). Fetching such a link can use it up or sign you in somewhere.</li>
+</ul>
+<h2 id="what-a-fetch-is">What a fetch is</h2>
+<p>Two requests at most: the page, for its <code>&lt;head&gt;</code>, then the image it names.</p>
+<ul>
+<li><strong>No cookies, no referrer</strong> (<code>credentials: &#39;omit&#39;</code>, <code>referrerPolicy: &#39;no-referrer&#39;</code>). The
+site sees a request from your network address, not who you are on it.</li>
+<li><strong>Capped</strong>: 10 seconds, the first 1 MB of the page (the head is near its start), images up to
+8 MB. SVG is refused. The picture is redrawn as WebP, at most 1280 px wide.</li>
+<li><strong>Best effort</strong>: anything unexpected and the card goes without a picture.</li>
+</ul>
+<h2 id="what-it-won39t-reach">What it won&#39;t reach</h2>
+<p>A public page can redirect, or name a preview image somewhere else. midden refuses anything
+that isn&#39;t <code>http(s)</code> to a public host:</p>
+<ul>
+<li>single-label names (<code>localhost</code>, intranet names) and names ending in a dot;</li>
+<li>names under <code>.local</code>, <code>.localhost</code>, <code>.internal</code>, <code>.lan</code>, <code>.home</code>, <code>.arpa</code>;</li>
+<li>IPv4 private, loopback, link-local, shared (100.64/10), multicast and reserved ranges, and
+<code>0.x</code>;</li>
+<li>IPv6 loopback, unique-local, link-local and IPv4-mapped addresses. In the extension the
+browser rules (below) go further and refuse every IPv6 literal.</li>
+</ul>
+<h3 id="how-the-extension">How (the extension)</h3>
+<p>Two layers, either of which stops it:</p>
+<ol>
+<li><strong>The address is checked before fetching</strong>, and again after: the page&#39;s URL, the image&#39;s
+URL, and where a redirect ended up. A response that
+landed off the public web is thrown away unread.</li>
+<li><strong>Browser rules block the request at every hop, redirects included, before it connects</strong>. <code>fetch()</code> follows redirects without showing the hops,
+so the check in (1) only sees the end of the chain. These are <code>declarativeNetRequest</code>
+session rules, limited to midden&#39;s own requests: one per kind of address above, and the
+named suffixes as <code>requestDomains</code>.</li>
+</ol>
+<p><strong>Previews fail closed.</strong> They run only once every guard rule is confirmed in place. If the browser refuses the rules, or they can&#39;t
+be read back, previews stay off and the console says why
+(<code>[midden] preview guard failed; link previews stay off</code>). The pages check before fetching;
+the service worker checks before handing a job to the offscreen document, which can&#39;t see
+the rules itself.</p>
+<p>Chrome compiles each rule&#39;s pattern with RE2 under a 2 KB memory cap and rejects the whole set
+if any one is over. The patterns are kept to one kind of address each, measured at about
+1.4–1.6 KB, and a test fails if one grows much longer.</p>
+<h3 id="how-the-phone">How (the phone)</h3>
+<p>The app follows no redirects on its own (<code>disableRedirects</code>): each hop&#39;s address is checked
+before it&#39;s requested, so nothing private is ever contacted.</p>
+<h2 id="what-this-doesn39t-cover">What this doesn&#39;t cover</h2>
+<ul>
+<li><strong>A public name that resolves to a private address</strong> (DNS rebinding). The browser resolves
+names after its rules match, and an extension can&#39;t see the answer, so a name on the public
+web that points at your network gets through both layers.</li>
+<li><strong>The site knows it was fetched</strong>: from your network address, at about the time you saved
+the link. Turn previews off if that matters for what you save.</li>
+<li><strong>What the picture shows</strong> is whatever the site chose. midden doesn&#39;t check it.</li>
+</ul>
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="links.html"><span>Previous</span>Links and where they came from</a><a class="next" rel="next" href="markdown.html"><span>Next</span>Markdown notes</a></nav>
+  </main>
+  <footer>
+    <span>midden</span><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a><a href="mailto:support@yourmidden.app">support@yourmidden.app</a>
+    <span class="right">This site has no trackers.</span>
+  </footer>
+</div>
+</body>
+</html>

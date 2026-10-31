@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Links and where they came from · midden</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icon-16.png">
+<link rel="icon" type="image/png" sizes="48x48" href="../assets/icon-48.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="home" href="../index.html"><div class="mark"></div><div class="name">midden</div></a>
+    <div class="links"><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a></div>
+  </nav>
+  <main class="page">
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="bring-in.html"><span>Previous</span>Bring in</a><a class="next" rel="next" href="link-previews.html"><span>Next</span>Link previews</a></nav>
+    <img class="scene" src="../assets/art/links.svg" alt="" aria-hidden="true">
+<h1 id="links-and-where-they-came-from">Links and where they came from</h1>
+<p>Once <a href="bring-in.html">Bring in</a> has added thousands of links, cards are the wrong density
+for them. This page covers two features, both desktop only for now:</p>
+<ul>
+<li>the <strong>search words</strong> that filter by where something came from;</li>
+<li>the <strong>links arrangement</strong>, which shows links one compact row each.</li>
+</ul>
+<h2 id="search-words">Search words</h2>
+<p>They work like <code>#tags</code>:</p>
+<ul>
+<li>the match is exact, case doesn&#39;t matter, and every word must match (AND);</li>
+<li>a finished word leaves the search box and becomes a filter chip, and its × removes it;</li>
+<li>they filter the list and the map alike.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Word</th>
+<th>Matches</th>
+<th>Chip</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>from:bookmarks</code></td>
+<td>an item brought in: from a browser&#39;s bookmarks, Pocket, or a link kept in a Keep note</td>
+<td>from bookmarks</td>
+</tr>
+<tr>
+<td><code>from:midden</code></td>
+<td>an item captured in midden itself, on any of your devices</td>
+<td>saved in midden</td>
+</tr>
+<tr>
+<td><code>in:recipes</code></td>
+<td>an item kept in a bookmark folder of that name, at any depth</td>
+<td>in recipes</td>
+</tr>
+<tr>
+<td><code>in:dev/rust</code></td>
+<td>an item kept in those folders, in that order</td>
+<td>in dev › rust</td>
+</tr>
+<tr>
+<td><code>site:github.com</code></td>
+<td>an item whose address, or the page it was captured from, is on that site (subdomains included)</td>
+<td>on github.com</td>
+</tr>
+<tr>
+<td><code>is:unread</code></td>
+<td>Pocket said unread, no source said read, and it hasn&#39;t been looked at in midden since</td>
+<td>unread</td>
+</tr>
+<tr>
+<td><code>is:unseen</code></td>
+<td>not looked at, or saved again, in 3 months, or as Settings › List says</td>
+<td>unseen</td>
+</tr>
+<tr>
+<td><code>is:twice</code></td>
+<td>saved more than once: in two places, or twice in one</td>
+<td>saved twice</td>
+</tr>
+<tr>
+<td><code>is:sensitive</code></td>
+<td>might be sensitive, strong or weak, and not said to be fine (<a href="sensitive.html">Might be sensitive</a>)</td>
+<td>might be sensitive</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>Pocket isn&#39;t named outside Bring in.</strong> Once brought in, a Pocket save is a bookmark: it&#39;s
+<code>from:bookmarks</code>, its row says &quot;bookmarked&quot;, and the by-source arrangement groups it with
+them. Bring in still names Pocket, and Settings → Bring in lists each import by its source.</li>
+<li><strong>Folder names</strong> are matched in lowercase, with spaces written as hyphens: &quot;Long Reads&quot; is
+<code>in:long-reads</code>. A browser&#39;s own top folder (&quot;Bookmarks bar&quot;) can be named too, but the
+rail never shows it.</li>
+<li><strong>A word that isn&#39;t valid stays as search text,</strong> for example <code>from:raindrop</code>, <code>is:great</code> or
+<code>site:nowhere</code>. Typing <code>from:</code>, <code>in:</code>, <code>site:</code> or <code>is:</code> shows a one-line hint of what goes
+after it.</li>
+<li><strong>Folder data came from someone&#39;s export file</strong>, so only plain text folder names are used.</li>
+<li><strong>&quot;Unread&quot; is only said where it&#39;s true.</strong> A bookmark is never unread: midden can&#39;t know
+whether someone used it daily. Opening the item, or clicking its title in a link row, counts
+as looking at it, so it stops being unread.</li>
+</ul>
+<h2 id="the-links-arrangement">The links arrangement</h2>
+<p><strong>links</strong> in the list&#39;s arrangements shows only links, newest saved first. It stays while
+searching, with rows ranked by relevance; the other arrangements give way to relevance then.</p>
+<p><strong>A row</strong>:</p>
+<ul>
+<li><strong>The site&#39;s letter, on its own colour.</strong> midden doesn&#39;t fetch site icons, because each fetch
+would tell that site the link is saved.</li>
+<li><strong>The title.</strong> It opens the page in a new tab, and counts as opening it here.</li>
+<li><strong>Under it:</strong><ul>
+<li>the site;</li>
+<li>where it was kept, oldest first: &quot;bookmarked · 2019&quot;, &quot;Dev › Rust · 2021&quot;, &quot;saved · 2026&quot;;</li>
+<li>markers: unread, unseen, saved twice;</li>
+<li>the item&#39;s tags and the tags midden associates with it (dashed), as on a card. ✓ makes an association a tag
+and × dismisses it. There&#39;s no &quot;+&quot;: new tags are added in the opened item.</li>
+</ul>
+</li>
+<li><strong>On the right, &quot;4 →&quot;:</strong> how many things it&#39;s closely connected to: what the relevance engine
+finds similar, and what came from the same page. Shared tags and &quot;saved the same day&quot; aren&#39;t
+counted, though the opened item lists them: an import bunches both (a browser set up in one
+sitting dates its bookmarks together; a broad tag like #later covers hundreds), and the number
+is there to tell rows apart. So the opened item can list more than the row said. A row asks only
+after it has been on screen for 250 ms, so a fast scroll asks for nothing.</li>
+<li><strong>Clicking anywhere else on the row</strong> opens the item.</li>
+</ul>
+<p><strong>The rail</strong> on the left is hidden in narrow windows. Above the rows are three counts that also
+work as filters: unread, unseen, saved twice.</p>
+<ul>
+<li><strong>Sections:</strong> From, Your folders, Sites. Each row in them and each count is a search word: a
+click adds it, another takes it out.</li>
+<li><strong>Counts are over what&#39;s listed now,</strong> so picking bookmarks shows how many bookmarks are in
+each folder and on each site.</li>
+<li><strong>Your folders</strong> leaves out a browser&#39;s own top folders. A picked folder opens to show what&#39;s
+inside it.</li>
+<li><strong>Folders and sites</strong> show 8 at first, then &quot;N more…&quot; up to 60. Past 60, type <code>in:</code> or <code>site:</code>.</li>
+<li><strong>Known gap:</strong> a site row counts its exact site, but <code>site:</code> also matches subdomains, so the
+filtered list can be a little longer than the row said.</li>
+</ul>
+<h2 id="addresses-inside-text">Addresses inside text</h2>
+<p>A web address written inside text can be opened from where it&#39;s shown. This covers text
+items (a note you typed, or one brought in from Keep), your notes on an item, and the text
+read from a picture, on the desktop and the phone.</p>
+<ul>
+<li><strong>Shown short:</strong> the site, then the end of the path (<code>portal.example.com/…/chest-day</code>).
+The <code>https://</code>, query and <code>#</code> part are hidden, and hovering shows the whole address.</li>
+<li><strong>The site comes from the parsed address,</strong> never from the text around it, so
+<code>https://bank.example@evil.example/</code> shows as <code>evil.example</code>.</li>
+<li><strong>Only <code>http</code>, <code>https</code> and <code>www.</code> addresses</strong> become links (a <code>www.</code> address opens as
+<code>https</code>). <code>javascript:</code>, <code>data:</code>, <code>file:</code> and the rest stay as text.</li>
+<li><strong>Punctuation after an address stays text:</strong> a closing <code>.</code>, <code>,</code> or <code>)</code>. A bracket that opened
+inside the address stays part of it.</li>
+<li><strong>Opens in a new tab with no referrer,</strong> like a link card. Clicking it doesn&#39;t open the card.</li>
+<li><strong>The stored text never changes,</strong> so search, copy and export see what was written.</li>
+<li><strong>They&#39;re not link items.</strong> They don&#39;t show in the links arrangement, and <code>site:</code> doesn&#39;t
+match them.</li>
+</ul>
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="bring-in.html"><span>Previous</span>Bring in</a><a class="next" rel="next" href="link-previews.html"><span>Next</span>Link previews</a></nav>
+  </main>
+  <footer>
+    <span>midden</span><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a><a href="mailto:support@yourmidden.app">support@yourmidden.app</a>
+    <span class="right">This site has no trackers.</span>
+  </footer>
+</div>
+</body>
+</html>

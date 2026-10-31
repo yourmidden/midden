@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+<title>The models midden runs · midden</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icon-16.png">
+<link rel="icon" type="image/png" sizes="48x48" href="../assets/icon-48.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="home" href="../index.html"><div class="mark"></div><div class="name">midden</div></a>
+    <div class="links"><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a></div>
+  </nav>
+  <main class="page">
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="philosophy.html"><span>Previous</span>Why midden exists</a><a class="next" rel="next" href="hoard-security.html"><span>Next</span>The hoard</a></nav>
+    <img class="scene" src="../assets/art/stars.svg" alt="" aria-hidden="true">
+<h1 id="the-models-midden-runs">The models midden runs</h1>
+<p>midden works out what each thing you save is about with small models that run on your device. They ship inside the extension and it can&#39;t fetch others, so what you save is never sent to a model somewhere else.</p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>Model</th>
+<th>Licence</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Text embeddings</td>
+<td><code>bge-small-en-v1.5</code></td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>Finding text</td>
+<td>PP-OCRv4 detection</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>Reading text</td>
+<td>PP-OCRv5 English recognition</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>Speech to text</td>
+<td><code>whisper-tiny.en</code></td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>Speech detection</td>
+<td>Silero VAD v5</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>Images by content</td>
+<td>SigLIP base patch16-224</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>QR codes</td>
+<td>zxing-cpp, or the browser&#39;s <code>BarcodeDetector</code></td>
+<td>Apache-2.0</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>English only</strong>, for now: the embedder, text reading and speech models are all English.</li>
+<li><strong>The phone runs none of them.</strong> It searches what your other devices have already worked out.</li>
+</ul>
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="philosophy.html"><span>Previous</span>Why midden exists</a><a class="next" rel="next" href="hoard-security.html"><span>Next</span>The hoard</a></nav>
+  </main>
+  <footer>
+    <span>midden</span><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a><a href="mailto:support@yourmidden.app">support@yourmidden.app</a>
+    <span class="right">This site has no trackers.</span>
+  </footer>
+</div>
+</body>
+</html>

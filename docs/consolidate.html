@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Consolidate · midden</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icon-16.png">
+<link rel="icon" type="image/png" sizes="48x48" href="../assets/icon-48.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="home" href="../index.html"><div class="mark"></div><div class="name">midden</div></a>
+    <div class="links"><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a></div>
+  </nav>
+  <main class="page">
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="overview.html"><span>Previous</span>midden at a glance</a><a class="next" rel="next" href="bring-in.html"><span>Next</span>Bring in</a></nav>
+    <img class="scene" src="../assets/art/basket.svg" alt="" aria-hidden="true">
+<h1 id="consolidate">Consolidate</h1>
+<p>Things you dropped one at a time, over days, under one tag, made into a single card. There are two
+ways to do it:</p>
+<ul>
+<li><strong>List</strong>: notes and links as one checklist. The card is new text, and it keeps a copy of each
+original, so the originals can go to the trash.</li>
+<li><strong>Bundle</strong>: anything (notes, links, pictures, files, recordings) kept together as one card,
+each item whole. Nothing is copied and nothing goes to the trash.</li>
+</ul>
+<h2 id="doing-it">Doing it</h2>
+<ol>
+<li>Filter to a tag (<code>#lisbon</code>). When at least two items are showing, the filter bar offers
+<strong>consolidate…</strong> (desktop only for now).</li>
+<li>The sheet lists what&#39;s showing (your notes <em>on</em> items aren&#39;t in it), oldest first, all ticked.
+Untick what doesn&#39;t belong.<ul>
+<li>It opens as a <strong>list</strong> when a list can take everything, and as a <strong>bundle</strong> otherwise.
+Switch with the two buttons at the top.</li>
+<li>What the chosen way can&#39;t take is greyed out, with why: &quot;a list takes notes and links: use a
+bundle&quot;, &quot;a bundle can&#39;t go in another&quot;, &quot;a locked item stays on its own&quot;.</li>
+<li>Each row shows its kind, when you saved it and its tags. <strong>ticked in it</strong> means something in
+it is already ticked. <strong>N notes on it</strong> and <strong>reminder …</strong> (amber) are what it carries.</li>
+</ul>
+</li>
+<li><strong>Title</strong> starts as the tag&#39;s name. Clear it for a list with no heading or a bundle called
+&quot;Untitled bundle&quot;.</li>
+<li>The right side shows the card you&#39;ll get, as it will look. <strong>consolidate</strong> makes it and opens
+it.</li>
+</ol>
+<h2 id="a-list">A list</h2>
+<ul>
+<li><code># Title</code>, then a box per item: <code>- [ ] its words</code>. A note&#39;s other lines are carried under its
+box. A note that was a checklist brings its boxes, ticked as they are now, under its words (the
+box over them is ticked when they all are), or as boxes of their own when it has no other
+words. What was ticked is written into the new text as <code>[x]</code>.</li>
+<li>A link is a box with its title linking to it (<code>- [ ] [The market](https://…)</code>), or its bare
+address when it has no title.</li>
+<li>Shown as markdown (see <a href="markdown.html">Markdown notes</a>). Its footer says <strong>markdown · consolidated ·
+☑ n/t</strong>.</li>
+<li>Every tag the items had, each once.</li>
+<li><strong>Move the originals to the trash</strong> is on by default. They&#39;re kept there 30 days. The sheet says
+what goes with them (notes on them, reminders) and, in list mode, what a list can&#39;t take
+(&quot;1 can&#39;t go in a list (file): they stay where they are&quot;).</li>
+<li><strong>Reminders</strong>: if the originals go to the trash, the soonest reminder still to ring on one of
+them moves to the new card. A card holds one reminder, so any others wait in the trash with
+their originals, and come back if those are taken back. If the originals stay, so do their
+reminders.</li>
+</ul>
+<h3 id="made-from">Made from</h3>
+<p>An opened list card has a <strong>made from</strong> section, above <strong>connected to</strong>, with one line per
+original in the checklist&#39;s order: its words, when you saved it, and where it is now:</p>
+<ul>
+<li><strong>open</strong>: it&#39;s still in your heap;</li>
+<li><strong>in the trash · take back</strong>: take it back to open it again;</li>
+<li><strong>deleted for good</strong>: its words still show.</li>
+</ul>
+<p>Past 12 originals the section starts folded to one line. The history says <strong>consolidated from N
+items</strong>.</p>
+<p>The card&#39;s capture keeps a copy of each original: its words (a link&#39;s title and address), when
+you saved it, and its hash. It syncs and goes in
+backups with the card&#39;s captures, needs no store of its own, and is deleted with the card. Only
+well-formed copies are shown.</p>
+<p><strong>Deleting an original for good doesn&#39;t delete its words from the card.</strong> They&#39;re in the
+checklist, and in the copy the card keeps. To remove them, delete the list card too.</p>
+<h2 id="a-bundle">A bundle</h2>
+<ul>
+<li>One card stands for its items. While the bundle is there, they leave the list and the map, and
+show only inside it. Search still finds them: a hit on an item in a bundle shows the bundle.</li>
+<li>Its list card shows its name, how many items, a row for each of the first four (a picture&#39;s own
+picture, the rest by their kind&#39;s icon), then &quot;+N more&quot;. Faint layers behind the card say it
+holds more than one thing. The footer says what&#39;s in it: <strong>bundle · 3 notes · 2 links · 1
+picture</strong>.</li>
+<li>Its tags are every item&#39;s tags, each once, <strong>copied once</strong> when it&#39;s made. Tags you put on the
+bundle later stay with the bundle.</li>
+<li>Each item keeps its own tags, notes, reminders and history. A reminder on an item still rings
+from the item, and the opened bundle shows it in amber on the item&#39;s strip.</li>
+<li>An item is in <strong>one bundle at most</strong>. A bundle can&#39;t go in another.</li>
+</ul>
+<h3 id="opened">Opened</h3>
+<p>Each item whole, in the bundle&#39;s order, under a strip with its kind, when you saved it, notes or
+a reminder on it (amber), and:</p>
+<ul>
+<li><strong>open</strong>: its own card, with its notes, reminder, history and connections. That card says
+<strong>in the bundle &quot;Lisbon&quot; · take out</strong>;</li>
+<li><strong>take out</strong>: back in your heap, as it was.</li>
+</ul>
+<p>The history says <strong>bundled N items</strong>, <strong>took out &quot;…&quot;</strong>; an item&#39;s says <strong>put in the bundle &quot;…&quot;</strong>
+and <strong>taken out of the bundle &quot;…&quot;</strong>.</p>
+<h3 id="take-apart">Take apart</h3>
+<p><strong>take apart</strong> (in the opened bundle&#39;s header) puts the bundle in the trash. Its items show again
+as they were. The trash keeps it 30 days: take it back and they&#39;re bundled again. Putting the
+bundle in the trash any other way does the same.</p>
+<ul>
+<li>Taking out its last item puts the bundle in the trash too: a bundle of nothing isn&#39;t a card.</li>
+<li>Deleting an item for good takes it out of the bundle. When that was its last item, the bundle
+goes to the trash.</li>
+<li>Deleting the bundle for good leaves its items as they were.</li>
+</ul>
+<h2 id="not-yet">Not yet</h2>
+<ul>
+<li>Adding to a list or a bundle that&#39;s already made.</li>
+<li>Consolidating from the phone. A list card or a bundle syncs there and opens the same way.</li>
+</ul>
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="overview.html"><span>Previous</span>midden at a glance</a><a class="next" rel="next" href="bring-in.html"><span>Next</span>Bring in</a></nav>
+  </main>
+  <footer>
+    <span>midden</span><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a><a href="mailto:support@yourmidden.app">support@yourmidden.app</a>
+    <span class="right">This site has no trackers.</span>
+  </footer>
+</div>
+</body>
+</html>

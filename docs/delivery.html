@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Delivery between people · midden</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icon-16.png">
+<link rel="icon" type="image/png" sizes="48x48" href="../assets/icon-48.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="home" href="../index.html"><div class="mark"></div><div class="name">midden</div></a>
+    <div class="links"><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a></div>
+  </nav>
+  <main class="page">
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="sync.html"><span>Previous</span>Google Drive sync</a><a class="next" rel="next" href="reading-the-map.html"><span>Next</span>Reading the map</a></nav>
+    <img class="scene" src="../assets/art/letter.svg" alt="" aria-hidden="true">
+<h1 id="delivery-between-people">Delivery between people</h1>
+<p>Once you&#39;ve added someone in <strong>People</strong>, what you send them arrives by itself, and so does
+what they send you. There&#39;s no server of midden&#39;s in between. Each person keeps a mailbox
+folder in <strong>their own</strong> Google Drive. You post what you send into yours, and the other
+person&#39;s midden collects it from there. Nobody ever writes into anyone else&#39;s Drive.</p>
+<p>Delivery needs sync to be set up first.</p>
+<h2 id="how-it-works">How it works</h2>
+<h3 id="adding-someone">Adding someone</h3>
+<ul>
+<li>First contact is <strong>mutual</strong>: you scan their card and they scan yours, or you send a card
+each way. Comparing the <strong>safety number</strong> on both screens proves each card really came
+from the other person.</li>
+<li>A card carries the person&#39;s public keys and the address of their <code>hello</code> folder.</li>
+<li>From a card alone you can&#39;t send anything to a stranger: midden only accepts messages from
+people you&#39;ve added.</li>
+</ul>
+<h3 id="the-folders">The folders</h3>
+<pre><code>midden mailbox/        private: only you (and midden, through drive.file)
+  ├─ hello/            shared by link; its ID is on your card
+  ├─ &lt;opaque&gt;/         shared by link; one per contact, its ID handed to them sealed
+  └─ &lt;opaque&gt;/
+</code></pre>
+<ul>
+<li><strong><code>midden mailbox</code></strong> is private. Nobody but you can list it, so nobody can find your other
+contacts&#39; folders.</li>
+<li><strong><code>hello/</code></strong> is for first contact. Its ID is on your card.</li>
+<li><strong>One folder per contact.</strong> When you add someone, midden makes a folder for them, shares
+it by link, and hands them its ID in a sealed <code>mailbox</code> message (posted in <code>hello/</code>).<ul>
+<li>From then on, what you send them goes there, and they read it from there.</li>
+<li>Until they&#39;ve confirmed the handover, things still go through <code>hello/</code>, so sending right
+after adding someone works.</li>
+</ul>
+</li>
+<li>Folders are named with a random ID, because a link-shared folder&#39;s name is visible to
+whoever holds the link. A Drive description that only you can see (&quot;midden: Sam&quot;) tells
+you whose is whose.</li>
+</ul>
+<h3 id="sending-and-receiving">Sending and receiving</h3>
+<ol>
+<li><strong>Sending:</strong> midden seals the item (see Security) and posts it as one file in the folder
+you made for that person. The file is named
+<code>&lt;mailbox&gt;.&lt;message id&gt;.i</code>, where <code>&lt;mailbox&gt;</code> is worked out from both people&#39;s keys, so
+only the two of you can work it out.</li>
+<li><strong>Receiving:</strong> your midden lists your contacts&#39; folders and fetches what&#39;s yours. It does
+this <strong>without signing in</strong>, using midden&#39;s API key: the folders are link-shared, and the
+key only identifies midden&#39;s Cloud project to Google, not you.</li>
+<li><strong>Receipts:</strong> once you have an item, midden posts a sealed receipt in <em>your</em> folder for
+them (<code>&lt;mailbox&gt;.&lt;id&gt;.r.&lt;item id&gt;</code>).</li>
+<li><strong>Cleanup:</strong> when the sender sees your receipt, they take their copy down. Once their copy
+is gone, you take your receipt down. Everything clears itself, from listings alone, on
+whichever device checks first.<ul>
+<li>What nobody picks up is taken down after 14 days.</li>
+<li>Removing a contact deletes their folder, and everything in it.</li>
+</ul>
+</li>
+</ol>
+<h3 id="when-it-runs">When it runs</h3>
+<ul>
+<li><strong>Checking:</strong> when midden opens or the browser starts, every 10 minutes while the browser
+is open, and straight away after you send something. Never more than once a minute,
+except after a send.</li>
+<li><strong>Your other devices</strong> read the same folders, through your synced contacts. Whichever device
+adds a contact makes their folder, so there&#39;s never a second one.</li>
+</ul>
+<h2 id="security">Security</h2>
+<h3 id="what-protects-a-message">What protects a message</h3>
+<p>Each item, receipt and handover is <strong>sealed</strong> before it leaves the device:</p>
+<ul>
+<li>a fresh <strong>X25519</strong> key for every message, agreed with the recipient&#39;s key, then <strong>HKDF</strong>;</li>
+<li>the result encrypted with <strong>AES-256-GCM</strong>;</li>
+<li>inside, the sender&#39;s <strong>Ed25519</strong> signature over the header. The signature also covers the
+recipient&#39;s key and the one-time key, so a recipient can&#39;t re-seal a message to someone
+else as if the sender had sent it. The header names the body&#39;s hash, so the body is
+covered too.</li>
+</ul>
+<p>Nothing outside the sealed file says who it&#39;s from, who it&#39;s for, or what it is.</p>
+<h3 id="what-each-party-can-see">What each party can see</h3>
+<table>
+<thead>
+<tr>
+<th>Who</th>
+<th>Sees</th>
+<th>Doesn&#39;t see</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Google</strong></td>
+<td>your mailbox folders and files: their count, sizes and times; that they&#39;re link-shared</td>
+<td>anything inside them; your other Drive files are no different from before</td>
+</tr>
+<tr>
+<td><strong>midden&#39;s Drive access</strong> (<code>drive.file</code>)</td>
+<td>only files and folders midden made</td>
+<td>anything else in your Drive</td>
+</tr>
+<tr>
+<td><strong>Anyone with your card</strong></td>
+<td>your <code>hello/</code> folder: how many first contacts and handovers, their sizes and times</td>
+<td>who they&#39;re from, what they say, anything in your contact folders</td>
+</tr>
+<tr>
+<td><strong>A contact</strong></td>
+<td>their own folder: opaque names, sizes and times of what you sent <em>them</em></td>
+<td>your other contacts, or anything you sent anyone else</td>
+</tr>
+<tr>
+<td><strong>Anyone with midden&#39;s API key</strong></td>
+<td>what anyone with a link can see: a link-shared folder whose ID they already have</td>
+<td>private folders; folders whose ID they don&#39;t have</td>
+</tr>
+</tbody></table>
+<h3 id="the-api-key">The API key</h3>
+<ul>
+<li>The key ships inside every build, so it&#39;s <strong>not a secret</strong>, and it isn&#39;t treated as one.
+It only says &quot;this request is from midden&#39;s Cloud project&quot;. It doesn&#39;t sign anyone in, and
+it doesn&#39;t open anything that isn&#39;t already shared by link.</li>
+<li>It&#39;s restricted to the <strong>Google Drive API</strong>.</li>
+<li>The real risk is to <strong>quota</strong>: someone could use the key for their own Drive API calls, using up midden&#39;s quota.</li>
+</ul>
+<h3 id="limits-said-plainly">Limits, said plainly</h3>
+<ul>
+<li><strong>Link-shared means shared:</strong> anyone holding a folder&#39;s ID can list it and download its
+files. The protection is that the IDs are hard to guess, are only ever on your card
+(<code>hello/</code>) or sealed to one contact, and that every file is sealed.</li>
+<li><strong>What the files reveal:</strong> sizes and times show <em>that</em> you&#39;re talking, and roughly how
+much, to anyone who holds that folder&#39;s ID (Google included).</li>
+<li><strong>A lost or stolen device</strong> holds your keys, so anyone with that device unlocked can read
+what arrives. There&#39;s no remote wipe, and no way yet to replace your card and keys.</li>
+<li><strong>Message size:</strong> one message carries up to 100 MB. Anything bigger posted into a folder is
+ignored, not fetched.</li>
+<li><strong>No arrival alert on the phone yet:</strong> items arrive at the next check, while midden is open.</li>
+</ul>
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="sync.html"><span>Previous</span>Google Drive sync</a><a class="next" rel="next" href="reading-the-map.html"><span>Next</span>Reading the map</a></nav>
+  </main>
+  <footer>
+    <span>midden</span><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a><a href="mailto:support@yourmidden.app">support@yourmidden.app</a>
+    <span class="right">This site has no trackers.</span>
+  </footer>
+</div>
+</body>
+</html>

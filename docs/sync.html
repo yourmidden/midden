@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Google Drive sync · midden</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icon-16.png">
+<link rel="icon" type="image/png" sizes="48x48" href="../assets/icon-48.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="home" href="../index.html"><div class="mark"></div><div class="name">midden</div></a>
+    <div class="links"><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a></div>
+  </nav>
+  <main class="page">
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="backup.html"><span>Previous</span>Backup</a><a class="next" rel="next" href="delivery.html"><span>Next</span>Delivery between people</a></nav>
+    <img class="scene" src="../assets/art/sync.svg" alt="" aria-hidden="true">
+<h1 id="google-drive-sync">Google Drive sync</h1>
+<p>midden keeps your browsers in sync through a hidden <strong>app folder</strong> in your Google Drive,
+encrypted on your device with a sync passphrase. The app folder is private to midden: midden can&#39;t see your other Drive
+files, and they don&#39;t show it. Google stores only ciphertext.</p>
+<p>This page covers how sync works and what it protects.</p>
+<p>Once connected, midden syncs straight away. After that, your changes go out about 30 seconds
+after you make them. Other devices&#39; changes come in when you open or return to midden (at
+most once a minute), when the browser starts, and every 10 minutes. <strong>sync</strong> in the menu (or
+<strong>sync now</strong> in Settings → Sync) runs one immediately.</p>
+<h2 id="using-it-in-another-browser">Using it in another browser</h2>
+<ol>
+<li>Install midden there.</li>
+<li><strong>Settings → Sync</strong>: enter the <strong>same</strong> sync
+passphrase and connect. midden merges in everything your other browsers have, then sends
+this one&#39;s.</li>
+</ol>
+<p>From then on, sync runs both ways by itself. Each change you make (a capture, a tag, a pin, a
+reminder, a deletion) is noted as it&#39;s saved, and goes out in a small encrypted batch once
+things go quiet. Each browser applies the other browsers&#39; batches in order. Browsers that are
+never open at the same time still converge: the batches wait in Drive.</p>
+<p><strong>How changes merge:</strong></p>
+<ul>
+<li>New captures, tags and taggings from either side are kept. Images download only if they&#39;re
+missing.</li>
+<li><strong>Deletions follow.</strong> Forgetting a fragment, removing a tag from it, renaming a tag or
+deleting one leaves a small <em>tombstone</em>, which tells the other browsers to remove it too. If
+the item was captured or tagged again <em>after</em> the deletion, it stays: a deliberate re-add
+wins. Tombstones are kept forever, so a browser that was offline for months can&#39;t bring a
+deleted item back.</li>
+<li><strong>What you say about an item</strong> (its reminder, the trash, &quot;it&#39;s fine&quot; on something that
+might be sensitive, markdown and its ticked boxes, which bundle it&#39;s in): kept beside it by
+its hash, and the most recent change wins, for markdown box by box.</li>
+<li><strong>Pins:</strong> the most recent pin or unpin wins. Positions midden chooses itself aren&#39;t synced:
+each browser lays out the rest of the map from the same data, so maps look alike but not
+pixel-identical.</li>
+<li><strong>The hoard</strong> (a separate extension): its envelope travels with the changes when it changed, still
+encrypted, and midden hands it to the hoard. If both browsers share the same hoard (one was
+set up from the other&#39;s), entries merge even while it&#39;s locked, the most recent edit wins,
+and deletions follow (into the hoard&#39;s 30-day bin). Otherwise (no hoard set up yet, or a
+different master password) the items wait in the hoard for your OK, and midden says so.
+Without the hoard installed, midden can&#39;t deliver them; they stay in Drive.</li>
+<li>Same-item edits made in two browsers between syncs aren&#39;t merged field by field: the later
+one wins.</li>
+</ul>
+<p><strong>When the store is erased or replaced:</strong> before each run, a device checks that the store&#39;s
+<code>sync-key.json</code> is still the one it joined. It&#39;s the same store if:</p>
+<ul>
+<li>it&#39;s the same file as last time;</li>
+<li>it carries this device&#39;s key&#39;s check mark (a passphrase change elsewhere keeps the key);</li>
+<li>or, for a key file from before those marks, this device&#39;s key opens one of the store&#39;s
+files.</li>
+</ul>
+<p>Anything else (no key file, a different key, nothing to tell by) stops sync on that device
+before anything is sent or taken. The device drops its copy of the key, and <strong>Settings → Sync</strong>
+says the store was erased or replaced. Nothing on the device changes. Connect again with the
+passphrase of the store that&#39;s there now. If the check itself can&#39;t run (offline, signed out),
+nothing goes either way, and the next run tries again.</p>
+<p><strong>Changing the passphrase:</strong> <strong>Settings → Sync → Sync passphrase → change</strong> asks for the current one and a new one,
+then re-wraps the same sync key under the new one. Browsers already connected keep syncing
+(they hold the key); a browser connecting from now on uses the new one. It doesn&#39;t re-encrypt
+what&#39;s already in Drive under a new key: if a passphrase leaked, start over (below). A
+recovery sheet keeps working.</p>
+<p><strong>The recovery key</strong> (optional): ten words from the EFF list (about 129 bits), printed once,
+that open the store if the passphrase is forgotten. Connecting offers one when the store has
+none, and <strong>Settings → Sync → Encryption → Recovery key</strong> makes one later. A connected device
+already holds the sync key, so it needs no passphrase: you print the sheet (or write it by
+hand), type two of its words back, and only then is it saved. The words wrap the same sync
+key the passphrase does (HKDF-SHA256 under its own label, then AES-256-GCM), and that slot
+sits beside the passphrase&#39;s in <code>sync-key.json</code>. midden keeps no copy of the words.</p>
+<ul>
+<li><strong>Forgot the passphrase:</strong> on a device joining the store, a passphrase that doesn&#39;t open
+it leads to <strong>Forgot the passphrase?</strong>. When the store has a recovery key, its ten words
+come first: they open the key, you set a new passphrase, and the device joins (the usual
+<strong>join it</strong> step). Erasing is still there below it. Devices already connected keep syncing.</li>
+<li><strong>What stops a sheet working:</strong> making a new one, removing it, or erasing the store (the
+key file goes). Changing the passphrase doesn&#39;t.</li>
+<li><strong>What it doesn&#39;t open:</strong> the hoard. The hoard has its own recovery key.</li>
+<li><strong>Checks:</strong> the slot is only used from a key file that carries the key&#39;s check mark, and
+the key the words open must match that mark, so a slot copied in from another store opens
+nothing. A malformed slot is refused, not skipped.</li>
+</ul>
+<p><strong>Joining a store with data in it:</strong> once the passphrase opens it, midden says what the store
+holds (files, size, how many devices wrote to it) before this device takes it in, with <strong>join
+it</strong> or <strong>erase it and start over</strong>.</p>
+<p><strong>Devices:</strong> each device puts a small sealed <code>device-&lt;id&gt;.enc</code> in the store: its name, whether
+it&#39;s a browser or a phone, and when it last ran. It starts as its browser and system (&quot;Brave
+on Linux&quot;, &quot;Android phone&quot;), and <strong>Settings → Sync → Devices → rename</strong> changes it; the
+others pick the new name up on their next sync. The list shows only devices with files in
+the store. <strong>remove…</strong> takes another device out of sync: a <code>removed-&lt;id&gt;.enc</code> marker goes up
+first, then that device&#39;s logs, snapshots and name file go. What it sent is already on the
+devices that pulled it, and what&#39;s on it stays there. midden warns if this device hasn&#39;t
+taken in its latest changes yet. If the removed device runs again, it finds the marker,
+stops, and says it was removed; connecting it again clears the marker.</p>
+<p><strong>Starting over:</strong> <strong>Settings → Sync → Danger zone → Erase synced data</strong> removes every file in
+the store, the key file first, so each connected device&#39;s next run finds no key and stops
+(above) rather than writing into what&#39;s left. A run under way on this device stops between
+files. This device disconnects; what&#39;s on every device stays. A forgotten passphrase leads
+to the same place from the connect form.</p>
+<h2 id="what39s-stored-and-how">What&#39;s stored, and how</h2>
+<table>
+<thead>
+<tr>
+<th>Drive file</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sync-key.json</code></td>
+<td>the sync key, wrapped by your passphrase (Argon2id + AES-256-GCM), and the key&#39;s check mark (SHA-256 of a label and the key, so a device can recognize its key without the passphrase); the same key wrapped by the recovery key, when you made one; no data</td>
+</tr>
+<tr>
+<td><code>blob-&lt;sha256&gt;.enc</code></td>
+<td>each image or file, and each link thumbnail, encrypted, uploaded once; an item&#39;s own file is removed once it&#39;s deleted for good (a thumbnail&#39;s stays)</td>
+</tr>
+<tr>
+<td><code>hoard-&lt;sha256&gt;.enc</code></td>
+<td>each of the hoard&#39;s pictures, still encrypted by the hoard (its key is inside the item), then by the sync key; uploaded once; removed once only deleted hoard items have it</td>
+</tr>
+<tr>
+<td><code>log-&lt;browser&gt;-&lt;n&gt;.enc</code></td>
+<td>one batch of a browser&#39;s changes, numbered in order</td>
+</tr>
+<tr>
+<td><code>device-&lt;id&gt;.enc</code></td>
+<td>a device&#39;s name, kind and when it last ran (Settings → Sync → Devices)</td>
+</tr>
+<tr>
+<td><code>removed-&lt;id&gt;.enc</code></td>
+<td>that device was removed from sync on another device: it stops if it runs again</td>
+</tr>
+<tr>
+<td><code>snapshot-&lt;browser&gt;-&lt;n&gt;.enc</code></td>
+<td>everything that browser knew at batch <code>n</code> (pins only, not layout), for a browser catching up</td>
+</tr>
+</tbody></table>
+<ul>
+<li>Each file is AES-256-GCM encrypted, with its own file name bound in as associated data, so
+files can&#39;t be swapped between names without decryption failing.</li>
+<li>Each browser numbers its own files, so two browsers never write the same name.</li>
+<li>A browser writes a snapshot when it connects, after you import a file (what a file adds
+isn&#39;t noted as changes), then about every 100 batches or 7 days. It
+keeps its newest two, and deletes its batches the older one already covers. A browser that
+was away longer than that catches up from the snapshot instead.</li>
+<li>The hoard&#39;s envelope rides in a batch only when the hoard changed. Its pictures don&#39;t ride
+in it: each item names its pictures by the hash of their ciphertext, and they go up as
+<code>hoard-*.enc</code> files beforehand. A browser whose hoard lacks one fetches it after pulling,
+and the hoard takes it only if one of its items (or an offer waiting for your OK) names it.</li>
+<li>Transcripts, the text read from pictures and the QR codes found in them travel with the
+changes, since they&#39;re slow to work out again. So does the text read from a link&#39;s
+screenshot, which only search uses. The rest of what midden derives
+(embeddings, similarity, layout) isn&#39;t uploaded: each device rebuilds it.</li>
+</ul>
+<h2 id="security">Security</h2>
+<p><strong>What protects what:</strong></p>
+<ul>
+<li><strong>Your sync passphrase</strong> wraps the sync key (Argon2id, then AES-256-GCM). Every file midden
+uploads is encrypted with that key on your device first. Google, and anyone who gets into
+your Google account, sees only ciphertext.</li>
+<li><strong>The scope</strong> is <code>drive.appdata</code>: midden&#39;s own hidden app folder. midden can&#39;t read or list
+your other Drive files, and they can&#39;t see its folder.</li>
+<li><strong>File names are bound in:</strong> each file is encrypted with its own name as associated data,
+so a file renamed or swapped for another fails to decrypt instead of being read as the
+wrong thing.</li>
+</ul>
+<p><strong>What Google can still see:</strong></p>
+<ul>
+<li>how many files there are, their sizes, and when they were written;</li>
+<li>the file names: which device wrote a batch, the batch numbers, and each picture&#39;s or
+file&#39;s SHA-256. The hash reveals whether two uploads are the same file, but nothing about
+what it contains.</li>
+</ul>
+<p><strong>What&#39;s kept on the device:</strong></p>
+<ul>
+<li><strong>Google&#39;s access token</strong> lasts about an hour. The extension holds it in
+<code>chrome.storage.session</code>, in memory only, never written to disk. It&#39;s renewed silently
+while you&#39;re signed in to Google in that browser. The phone gets its token from Play
+services and holds it in memory for 45 minutes at most.</li>
+<li><strong>No client secret</strong> exists anywhere: the extension uses the browser&#39;s sign-in flow and
+the phone uses Play services.</li>
+<li><strong>The unwrapped sync key</strong> stays in this browser profile (or the phone&#39;s app storage), so
+sync can run in the background without asking for the passphrase. midden&#39;s data is stored
+unencrypted in the same place anyway: the encryption protects the Drive copy, not the
+device. Someone with your unlocked device has your midden.</li>
+</ul>
+<p><strong>Limits, said plainly:</strong></p>
+<ul>
+<li>Changing the passphrase re-wraps the same key; it doesn&#39;t re-encrypt what&#39;s in Drive. If a passphrase leaked, start over: <strong>Settings → Sync → Danger zone → Erase synced data</strong>.</li>
+<li>Every device you connected holds the key, and there&#39;s no way to take it back from one. To
+shut out a lost device, start over with a new passphrase: it can&#39;t read anything written
+after that.</li>
+<li>A device&#39;s clock decides which of two conflicting edits wins.</li>
+<li>The recovery sheet, with access to your Google account, reads your synced midden. Keep it
+like a passport. Without it and without the passphrase, the Drive copy can&#39;t be read; what&#39;s
+on your devices stays.</li>
+</ul>
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="backup.html"><span>Previous</span>Backup</a><a class="next" rel="next" href="delivery.html"><span>Next</span>Delivery between people</a></nav>
+  </main>
+  <footer>
+    <span>midden</span><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a><a href="mailto:support@yourmidden.app">support@yourmidden.app</a>
+    <span class="right">This site has no trackers.</span>
+  </footer>
+</div>
+</body>
+</html>

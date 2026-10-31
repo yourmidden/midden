@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Bring in · midden</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icon-16.png">
+<link rel="icon" type="image/png" sizes="48x48" href="../assets/icon-48.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="home" href="../index.html"><div class="mark"></div><div class="name">midden</div></a>
+    <div class="links"><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a></div>
+  </nav>
+  <main class="page">
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="consolidate.html"><span>Previous</span>Consolidate</a><a class="next" rel="next" href="links.html"><span>Next</span>Links and where they came from</a></nav>
+    <img class="scene" src="../assets/art/barrow.svg" alt="" aria-hidden="true">
+<h1 id="bring-in">Bring in</h1>
+<p><strong>Settings → Bring in</strong> brings in what someone kept in another tool, at the time they saved it.
+It works as a dig, not a transfer: a Pocket export of 2016–2025 arrives as nine years of
+layers, so the time rail, <em>unseen</em> and resurfacing have something to work with on day one.</p>
+<h2 id="what-it-reads">What it reads</h2>
+<p>A dropped or chosen file is recognised by what&#39;s inside it, never by its name:</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Format</th>
+<th>What it carries</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Pocket</td>
+<td>its zip of <code>part_*.csv</code>, a single CSV, or the older <code>ril_export.html</code></td>
+<td>when saved, tags, read or unread</td>
+</tr>
+<tr>
+<td>Google Keep</td>
+<td>a Google Takeout zip: a <code>.json</code> per note in <code>Takeout/Keep/</code>, beside its attachments</td>
+<td>when made, labels (as tags), pictures, recordings</td>
+</tr>
+<tr>
+<td>Any browser&#39;s bookmarks file</td>
+<td>Netscape bookmark HTML (Chrome, Brave, Edge, Firefox, Safari, Safari&#39;s zip)</td>
+<td>when saved (not Safari), folders, tags (Firefox)</td>
+</tr>
+<tr>
+<td>This browser&#39;s bookmarks</td>
+<td>read through the <code>bookmarks</code> permission (extension only)</td>
+<td>when saved, folders</td>
+</tr>
+<tr>
+<td>A <code>.midden</code> file</td>
+<td></td>
+<td>not a dig: it&#39;s sent to Backup</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>The Pocket formats</strong> come from Pocket&#39;s documentation, not from a real export, so one may fail to read. If it does, <a href="https://github.com/yourmidden/midden/issues/new/choose">tell us</a>.</li>
+<li><strong>The Keep format</strong> was checked against a real Takeout (2026-10). Checklists
+(<code>listContent</code>) and voice notes weren&#39;t in it, so those follow Takeout&#39;s documented shape. Keep has no export button; the page&#39;s &quot;Where do I get an export?&quot; says to
+use Google Takeout with only Keep ticked.</li>
+<li><strong>Only <code>http</code>/<code>https</code> addresses come in</strong> as links. Bookmarklets, <code>chrome://</code>, <code>file:</code>, <code>data:</code> and
+Firefox&#39;s <code>place:</code> entries are counted as skipped.</li>
+<li><strong>Limits</strong>:<ul>
+<li>64 MB of text per file, read or unzipped;</li>
+<li>4 GB of attachments in a zip (Keep&#39;s pictures and recordings), held as Blobs, which the
+browser can keep on disk. A zip is read in 4 MB pieces, never whole; a zip that can&#39;t be
+streamed (an entry stored with its size after it) is read whole if it&#39;s under 64 MB;</li>
+<li>200,000 records;</li>
+<li>20 folder levels kept;</li>
+<li>titles one line, up to 500 characters.</li>
+</ul>
+</li>
+</ul>
+<h2 id="what-arrives">What arrives</h2>
+<ul>
+<li><strong>One item per address.</strong> An address found in two sources (Pocket and bookmarks) is one item
+with a line of history from each. The same address saved twice in one source counts once:
+its first save, with every tag from both.</li>
+<li><strong>At the time it was saved there.</strong> The capture&#39;s time is the original save. The item&#39;s
+creation date moves back to its earliest known save, including when it was already in
+midden. Times outside 1990 to tomorrow are dropped: the item counts as undated.</li>
+<li><strong>Undated items</strong> (Safari keeps no dates) come in as saved when they were brought in. They
+show in their own &quot;no date&quot; layer, never in a guessed year.</li>
+<li><strong>Tags arrive as tags.</strong> They were declared in the other tool, so they mean the same thing
+here. Folders never become tags: they&#39;re kept as provenance on the capture, and the card&#39;s
+history says &quot;bookmarked in Bookmarks bar › Recipes&quot;.</li>
+<li><strong>Read status</strong> (Pocket) is kept on the capture: &quot;saved in Pocket, read there&quot;.</li>
+<li><strong>A Keep note becomes what it is</strong>:<ul>
+<li>a note that is one address alone is a link, titled by the note&#39;s title, or by Keep&#39;s
+preview when the preview is of that address;</li>
+<li>any other text is text, the note&#39;s title as its first line; a checklist is text with ☐
+and ☑ lines; a note with only a title is that title;</li>
+<li>each picture or recording is its own item, named by the note&#39;s title;</li>
+<li>Keep&#39;s link previews (<code>annotations</code>) are used only when the note has no text. Otherwise
+the links are already in the text, and Keep fetched the previews signed out (a members&#39;
+page previews as &quot;Login&quot;);</li>
+<li>what one note held is kept together (a <code>kept</code> relation, as from a card), so the text and
+its picture find each other;</li>
+<li>trashed notes are left out; pins, colours and archiving say nothing midden keeps;</li>
+<li>its history says &quot;kept in a note&quot;, and a compact row &quot;in a note · 2019&quot;.</li>
+</ul>
+</li>
+<li><strong>Left out:</strong><ul>
+<li>Safari&#39;s starting Favorites (undated front pages of Apple, iCloud, Google and the others
+Safari ships with), because nobody chose them;</li>
+<li>anything in midden&#39;s trash, which stays there untouched;</li>
+<li>an export already brought in, which adds nothing a second time.</li>
+</ul>
+</li>
+</ul>
+<h2 id="what-looks-like-a-secret">What looks like a secret</h2>
+<p>Before a dig runs, its warning lists what in it looks like a secret. It works by rules, not a model. In a note&#39;s text:</p>
+<ul>
+<li>a sheet of backup codes: 8 or more groups of 4 to 10 characters with digits or symbols,
+making up most of the note;</li>
+<li>a key in the shape its service gives it: <code>sk-…</code>, <code>AKIA…</code>, <code>ghp_…</code> and the other GitHub
+tokens, <code>xox…-</code> (Slack), <code>AIza…</code> (Google), a <code>BEGIN … PRIVATE KEY</code> block, a sign-in token
+(JWT, <code>eyJ….eyJ….…</code>);</li>
+<li>a line that starts <code>password:</code>, <code>pin:</code>, <code>passcode:</code>, <code>passphrase:</code> or <code>secret:</code> (or <code>=</code>);</li>
+<li>only lowercase words, 12, 15, 18, 21 or 24 of them: a wallet&#39;s recovery phrase.</li>
+</ul>
+<p>In a link&#39;s address:</p>
+<ul>
+<li>a password before the site (<code>user:pass@host</code>);</li>
+<li>a parameter, in the query or after <code>#</code>, named for a token, signature, password, secret or
+session (<code>access_token</code>, <code>token</code>, <code>X-Amz-Signature</code>, <code>sig</code>, <code>pwd</code>, <code>client_secret</code> and so
+on), with a value that could be one: for a password, 4 characters or more; otherwise 16 or
+more with a letter in it, and for a plain <code>sig</code> or <code>signature</code>, not only hex (a search
+engine signing its own query);</li>
+<li><code>key=</code> with a long value of letters and digits, or <code>code=</code> on a sign-in path (<code>oauth</code>,
+<code>callback</code>, <code>login</code> and the like);</li>
+<li>a sign-in, reset, verify or invite path with a long random part in it;</li>
+<li>any of the key shapes above.</li>
+</ul>
+<p>Only strong findings are put to you here. A weak one (a checkout&#39;s token, a session id, a
+sign-in code: <a href="sensitive.html#strong-and-weak">Might be sensitive</a>) comes in, and waits in the heap&#39;s
+review, so a big dig isn&#39;t a page of rows. Titles and pictures aren&#39;t checked here: a
+picture&#39;s text is read once it&#39;s in the heap, and checked then.</p>
+<p>Each flagged item shows its first line (a link: its title, or else its site), when it was
+saved, why it was caught, and its opening with the rest hidden (a link: the address, with
+what it carries hidden). <strong>show</strong> reveals it. Each starts at <strong>leave out</strong>: fail closed,
+so nothing that looks secret comes in unless you choose. The choices are:</p>
+<ul>
+<li><strong>leave out</strong>: not brought in at all;</li>
+<li><strong>to the hoard</strong>: sent to the hoard as a note (with its tags; a link&#39;s address is the
+note&#39;s text), never entering midden. A locked hoard keeps it until you unlock. If the hoard doesn&#39;t
+take it, it&#39;s left out instead. Only offered in the extension, and only usable with a hoard
+that takes notes from midden;</li>
+<li><strong>bring in</strong>: like the rest.</li>
+</ul>
+<p>The warning&#39;s count leaves out what&#39;s held back. The page always says that &quot;midden looks for a
+few shapes of secret; it can miss others&quot;, and never that the rest is clear. The reading at the
+end says how many were left out, went to the hoard, are waiting for it, or couldn&#39;t go.</p>
+<h2 id="finding-what-came-in">Finding what came in</h2>
+<p><strong>open your heap</strong>, at the end of a dig, opens the heap narrowed to that dig: a filter chip (&quot;dug in: Google Keep · Oct 29&quot;) and, the first
+time, a line on what you&#39;re looking at. The view includes the items it added and the items
+already here that it gave a line of history. Every card works as usual (tag, note, keep together,
+the hoard, the trash), and ✕ on the chip shows the whole heap. <strong>Settings → Data &amp; storage →
+Imports</strong> has a <strong>show</strong> on each import that opens the same view later. A <code>.midden</code> file&#39;s
+import shows the items it added, as &quot;imported: its name&quot;.</p>
+<h2 id="two-times-on-an-imported-capture">Two times on an imported capture</h2>
+<p>An imported capture has its save time, from the source, and its arrival time.</p>
+<ul>
+<li><p><strong>What counts as a change uses arrival:</strong></p>
+<ul>
+<li>an item coming back after it was deleted on another device;</li>
+<li>leaving the trash;</li>
+<li>the <em>unseen</em> lens;</li>
+<li>what&#39;s &quot;yours&quot; after an import.</li>
+</ul>
+<p>Without this, a 2019 bookmark brought in today would lose to a deletion made yesterday on
+another device, and quietly disappear at the next sync.</p>
+</li>
+<li><p><strong>The time axis uses the save time:</strong> the rail, history, &quot;recent&quot; and &quot;circling&quot;. A dig of
+old links doesn&#39;t look like a burst of new activity.</p>
+</li>
+<li><p><strong>An import counts as a sign of you.</strong> Imported items join <em>unseen</em> only once they&#39;ve gone
+untouched for the usual time after the dig.</p>
+</li>
+</ul>
+<h2 id="taking-a-dig-back">Taking a dig back</h2>
+<p>Each dig is recorded as an import, on this device only. It can be undone
+from the end of the dig, or later from <strong>Settings → Data &amp; storage → Imports</strong>.</p>
+<ul>
+<li><strong>Items it added</strong> that haven&#39;t been touched since are deleted for good, here and, through
+sync, on other devices.</li>
+<li><strong>Items captured again or noted since</strong> are kept.</li>
+<li><strong>Items that were already in midden</strong> keep the history line and earlier date the dig gave
+them. The tags it added come off, unless they were put on again since.</li>
+<li><strong>Why the history stays:</strong> captures merge between devices by union and have no deletion
+record. Removing one here would come back at the next sync. The line is also true: it was
+saved there, then.</li>
+</ul>
+<h2 id="the-reading">The reading</h2>
+<p>At the end, the page says what came up, using only what the sources know:</p>
+<ul>
+<li>the years and the biggest one;</li>
+<li>a subject that went quiet: a title word with at least 5 items and none in the last two years,
+over a span of four or more years;</li>
+<li>how many were saved more than once;</li>
+<li>for Pocket only, how many were never marked read;</li>
+<li>the tags it brought;</li>
+<li>your own folders (a browser&#39;s top-level folders don&#39;t count);</li>
+<li>how many were undated, and how many stayed in the trash.</li>
+</ul>
+<h2 id="the-bookmarks-permission">The bookmarks permission</h2>
+<p><code>bookmarks</code> is an optional permission. midden asks for it only when <strong>bring in this browser&#39;s
+bookmarks</strong> is clicked:</p>
+<ol>
+<li>midden asks for the permission;</li>
+<li>it reads the bookmark tree once;</li>
+<li>it gives the permission back.</li>
+</ol>
+<p>midden keeps no access to bookmarks between uses, and never writes to them. Declining the
+prompt reads nothing.</p>
+<h2 id="not-yet">Not yet</h2>
+<ul>
+<li>Page previews and titles for dug links: links without a title show their address.</li>
+<li>Keeping up with new bookmarks as they&#39;re made.</li>
+<li>Raindrop and other tools&#39; exports.</li>
+<li>A Takeout split into parts, or saved as <code>.tgz</code>: each <code>.zip</code> part can be brought in on its
+own, but a note whose attachment landed in another part loses it (counted as skipped).</li>
+</ul>
+<p>Once links are in, the links arrangement and the <code>from:</code> / <code>in:</code> / <code>site:</code> / <code>is:</code> search words
+are how to look through them: see <a href="links.html">Links and where they came from</a>.</p>
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="consolidate.html"><span>Previous</span>Consolidate</a><a class="next" rel="next" href="links.html"><span>Next</span>Links and where they came from</a></nav>
+  </main>
+  <footer>
+    <span>midden</span><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a><a href="mailto:support@yourmidden.app">support@yourmidden.app</a>
+    <span class="right">This site has no trackers.</span>
+  </footer>
+</div>
+</body>
+</html>

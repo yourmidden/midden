@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Backup · midden</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icon-16.png">
+<link rel="icon" type="image/png" sizes="48x48" href="../assets/icon-48.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="home" href="../index.html"><div class="mark"></div><div class="name">midden</div></a>
+    <div class="links"><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a></div>
+  </nav>
+  <main class="page">
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="sensitive.html"><span>Previous</span>Might be sensitive</a><a class="next" rel="next" href="sync.html"><span>Next</span>Google Drive sync</a></nav>
+    <img class="scene" src="../assets/art/bottle.svg" alt="" aria-hidden="true">
+<h1 id="backup-the-midden-file">Backup: the .midden file</h1>
+<p><strong>Settings → Backup → export</strong> puts everything you made into one <code>.midden</code> file:</p>
+<ul>
+<li>your items, files, tags, captures and map positions;</li>
+<li>what you&#39;ve said about them: reminders, the trash, markdown and ticked boxes, bundles;</li>
+<li>the hoard&#39;s items, still encrypted by the hoard;</li>
+<li>your identity, so a restore keeps it.</li>
+</ul>
+<p><strong>import</strong> merges a <code>.midden</code> file in. Nothing already here is replaced or duplicated.</p>
+<h2 id="encrypted-by-default">Encrypted, by default</h2>
+<p>Exporting asks for a passphrase for that file. You type it twice, and it must pass the same
+strength check as the hoard&#39;s and sync&#39;s, because the file may sit in a cloud folder or on a USB
+stick for years. It&#39;s its own passphrase: nothing ties it to your sync passphrase.</p>
+<p><strong>How it&#39;s sealed</strong>:</p>
+<ul>
+<li><strong>The key:</strong> Argon2id turns the passphrase into the key, with a new salt for each file.</li>
+<li><strong>The encryption:</strong> AES-256-GCM, in 1 MB chunks, so a large backup never needs one giant
+encryption.</li>
+<li><strong>Tamper evidence:</strong> each chunk&#39;s associated data is the file&#39;s header, the chunk&#39;s place,
+and whether it&#39;s the last. A file that&#39;s edited, reordered or cut short doesn&#39;t open, and
+midden says so instead of importing part of it.</li>
+<li><strong>Hostile key settings:</strong> the header&#39;s Argon2id settings must lie within midden&#39;s floor and
+ceiling, so a file can&#39;t make the passphrase cheap to crack, or ask for gigabytes of memory.</li>
+</ul>
+<p><strong>What stays visible:</strong> the file&#39;s size, and that it&#39;s a midden backup.</p>
+<p><strong>A forgotten passphrase</strong> loses that file, not your midden. midden keeps no copy, and there&#39;s
+no recovery sheet for backups.</p>
+<h2 id="importing-one">Importing one</h2>
+<ol>
+<li><strong>The passphrase:</strong> an encrypted file asks for its passphrase before anything else. A wrong
+one says it wants the passphrase from when you exported, which may not be your sync passphrase.</li>
+<li><strong>What it adds:</strong> midden says what the file adds before importing it, and, if sync is on,
+that the new items go to your Drive and to all your devices.</li>
+<li><strong>Your identity:</strong> an encrypted backup carries your identity.<ul>
+<li>On a fresh install, it comes back, so your contacts still recognise you.</li>
+<li>On a browser that already made its own, midden asks. Keeping this browser&#39;s is the
+default. If you choose the backup&#39;s, this browser&#39;s keys retire, as when sync settles
+two, so what was sent to its card still opens for a while.</li>
+</ul>
+</li>
+</ol>
+<h2 id="a-plain-file-on-purpose">A plain file, on purpose</h2>
+<p><strong>export a plain file instead</strong> writes the archive unencrypted, a zip you can open with other
+tools:</p>
+<ul>
+<li><strong>Readable by anyone who has it:</strong> items, files, tags, captures, reminders and the text read
+from your pictures. Only the hoard&#39;s items stay locked.</li>
+<li><strong>Never in it:</strong> your identity&#39;s private keys. Restoring from a plain file means a new identity,
+and your contacts would need to add you again.</li>
+<li><strong>On import:</strong> a plain file never brings an identity, even one crafted to hold one.</li>
+</ul>
+<p>Older plain backups import as before.</p>
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="sensitive.html"><span>Previous</span>Might be sensitive</a><a class="next" rel="next" href="sync.html"><span>Next</span>Google Drive sync</a></nav>
+  </main>
+  <footer>
+    <span>midden</span><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a><a href="mailto:support@yourmidden.app">support@yourmidden.app</a>
+    <span class="right">This site has no trackers.</span>
+  </footer>
+</div>
+</body>
+</html>

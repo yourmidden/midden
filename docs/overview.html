@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+<title>midden at a glance · midden</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icon-16.png">
+<link rel="icon" type="image/png" sizes="48x48" href="../assets/icon-48.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="home" href="../index.html"><div class="mark"></div><div class="name">midden</div></a>
+    <div class="links"><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a></div>
+  </nav>
+  <main class="page">
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="hoard-security.html"><span>Previous</span>The hoard</a><a class="next" rel="next" href="consolidate.html"><span>Next</span>Consolidate</a></nav>
+    <img class="scene" src="../assets/art/pile.svg" alt="" aria-hidden="true">
+<h1 id="midden-at-a-glance">midden at a glance</h1>
+<p>What midden&#39;s words mean. Each entry is a line or two and
+points to the page that goes deeper. For why midden is built the way it is, see
+<a href="philosophy.html">Why midden exists</a>.</p>
+<h2 id="the-words">The words</h2>
+<h3 id="what-you-keep">What you keep</h3>
+<ul>
+<li><strong>The heap</strong>: everything you&#39;ve kept in midden. &quot;Asking your heap&quot; means searching it, or
+asking about it.</li>
+<li><strong>Item</strong>: one thing on the heap: a note, a link, a picture, a file, a recording, or a
+locked card. It&#39;s stored once, by
+the SHA-256 hash of its content, so saving the same thing twice gives you one item, saved
+twice. The content hash names the item in every browser; local ids don&#39;t travel.</li>
+<li><strong>Capture</strong>: one act of saving an item: when, how (typed, pasted, dropped, right-click,
+snagged, snipped, a voice note, shared from the phone, brought in…), and from which page. An
+item has one capture or more, and they&#39;re its timeline.</li>
+<li><strong>Kind</strong>: what an item is: text, link, image, file, audio or locked. Each has its own colour.</li>
+<li><strong>Note</strong>: what you write about an item. It&#39;s shown inside that item and never treated as an
+item itself.</li>
+<li><strong>Locked card</strong>: a stand-in for something in the hoard that you chose to make visible, showing
+only the label you gave it.</li>
+<li><strong>The hoard</strong>: a separate extension for passwords, 2FA secrets, private notes and identity
+documents, with its own storage and keys. midden never opens it
+(<a href="hoard-security.html">The hoard</a>).</li>
+<li><strong>Provenance</strong>: where something came from: the page, the way it was saved, or for
+something brought in, where it was kept before (&quot;bookmarked in Dev › Rust · 2021&quot;).</li>
+</ul>
+<h3 id="what-you-declare">What you declare</h3>
+<p>These are things you said, so midden treats them as facts.</p>
+<ul>
+<li><strong>Tag</strong>: a name you put on items (<code>#recipes</code>). Tags are declarations: midden never tags
+anything on its own. It only offers tags, which you take or turn down.</li>
+<li><strong>Kept together</strong>: two items you said belong together, from a card&#39;s same-day connections.
+It goes both ways, and it&#39;s listed first among the item&#39;s connections.</li>
+<li><strong>Pin</strong>: a card you placed on the map yourself. The layout never moves it.</li>
+<li><strong>Reminder</strong>: a time to bring an item back to you, which can repeat.</li>
+<li><strong>Trash</strong>: hidden everywhere, then deleted for good after 30 days unless you take it back
+out.</li>
+<li><strong>It&#39;s fine</strong>: something that might be sensitive that you said isn&#39;t, so it&#39;s asked about
+no more (<a href="sensitive.html">Might be sensitive</a>).</li>
+<li><strong>Markdown note</strong>: a note you said shows as markdown, and the boxes you ticked in it, kept
+beside the note (whose text never changes) (<a href="markdown.html">Markdown notes</a>).</li>
+<li><strong>Consolidated card</strong>: notes and links under one tag made into one markdown checklist; its
+capture keeps a copy of each item it was made from (<a href="consolidate.html">Consolidate</a>).</li>
+<li><strong>Bundle</strong>: items of any kind kept together as one card, each whole; while it&#39;s there they show
+only inside it (<a href="consolidate.html">Consolidate</a>).</li>
+</ul>
+<h3 id="what-midden-works-out">What midden works out</h3>
+<p>These are guesses. The UI shows them as guesses, says why it made each one, and only shows a
+guess past a measured bar.</p>
+<ul>
+<li><strong>Might be sensitive</strong>: an item whose words, address or read text look like a secret, by
+rules (<a href="sensitive.html">Might be sensitive</a>). Strong ones mark their card; weak ones wait in review.</li>
+<li><strong>Derivation</strong>: anything worked out from an item: its text read from a picture (OCR), its
+QR codes, a recording&#39;s transcript, its extracted text, its vector, its nearest neighbours,
+its entities. Every derivation is versioned and can be rebuilt.</li>
+<li><strong>Entity</strong>: a person, organisation, place, amount or date found in an item&#39;s text by rules,
+plus what kind of thing it is (a quote, bill, receipt or subscription notice). Entities show
+as square chips under its tags, and search takes <code>@name</code> and <code>$&gt;100</code>.</li>
+<li><strong>Similar</strong>: two items midden calls connected. The relevance engine scores the pair from all
+its evidence (meaning, pictures, people, organisations, the same site)
+and lists it only past the connection bar, with one reason (&quot;close in meaning&quot;,
+<em>Marcus Aurelius</em>).</li>
+<li><strong>Connections</strong>: everything an opened card lists under &quot;connected to&quot;, in this order: kept
+together, similar, same page, shared tags, same day. An item appears once, in the first
+group that claims it.</li>
+<li><strong>Associated</strong>: a tag midden suggests for an item, because items like it carry that tag.
+You take it or turn it down, and a dismissal is remembered.</li>
+<li><strong>Topic</strong>: a patch of the map midden thinks is about one thing. It&#39;s named from the words that set it apart, or after a tag most of it shares, and shown in italics. Because topics come from the map layout, they inherit its distortions.</li>
+<li><strong>Relevance engine</strong>: what&#39;s behind similar, associated tags, search ranking and resurfacing. Each has its own bar.</li>
+<li><strong>The bar</strong>: the score a guess must reach to be shown at all, set where about 9 in 10 shown
+were right. Some bars can be learned on your device from what you open, close, take and
+dismiss.</li>
+<li><strong>Calibration</strong>: how good the guesses really are. Every guess that&#39;s shown is recorded with
+what came of it (wanted, unwanted, or left alone), on this device only, and Diagnostics →
+Calibration turns that into scores against outcomes.</li>
+</ul>
+<h3 id="ways-of-looking">Ways of looking</h3>
+<ul>
+<li><p><strong>The map</strong> (canvas): every item placed so similar things sit close together (by meaning, with tags pulling hardest). It has topics, tag circles, and lenses
+(<a href="reading-the-map.html">Reading the map</a>).</p>
+</li>
+<li><p><strong>The list</strong>: the same items as cards, arranged one of these ways:</p>
+<ul>
+<li><strong>flat</strong>: newest first;</li>
+<li><strong>day</strong>: by day, like a journal;</li>
+<li><strong>source</strong>: by site, or how it came in;</li>
+<li><strong>topic</strong>: by the map&#39;s topics;</li>
+<li><strong>unseen</strong>: what you haven&#39;t looked at in a long while;</li>
+<li><strong>links</strong>: one row per link, with the rail for where they came from
+(<a href="links.html">Links and where they came from</a>).</li>
+</ul>
+<p>A long note folds on its card, with &quot;more&quot;: at 7 lines by default, or 3, or never, as
+Settings › List says, per device. Opened, it shows whole.</p>
+</li>
+<li><p><strong>Card focus</strong>: an item opened full size, with its connections and its history.</p>
+</li>
+<li><p><strong>History</strong>: an item&#39;s life, newest first. It merges its captures with its activity log:
+tagged, noted, kept together, reminded, sent. &quot;Opened&quot; stays on the device.</p>
+</li>
+<li><p><strong>Lens</strong>: a way of shading the map. <strong>Heat</strong> shows how well each item matches the search;
+<strong>forgotten</strong> shows what you haven&#39;t touched.</p>
+</li>
+<li><p><strong>Unseen / forgotten</strong>: an item with no sign of you in 3 months: not opened, found, noted,
+tagged or saved again. Settings › List changes how long: 1, 3 or 6
+months, or a year, per device; the unseen bands follow it.</p>
+</li>
+<li><p><strong>Resurfacing</strong>: &quot;goes with this week&quot;: forgotten items the relevance engine links to
+something you saved in the last 7 days. They lead the unseen arrangement.</p>
+</li>
+<li><p><strong>Kept coming back to</strong>: the topics you saved into most in the last 7 days.</p>
+</li>
+<li><p><strong>Search words</strong>: <code>#tag</code>, <code>@person</code>, <code>$&gt;100</code>, and where things came from: <code>from:bookmarks</code>,
+<code>from:midden</code>, <code>in:folder</code>, <code>site:</code>, <code>is:unread</code>, <code>is:unseen</code>, <code>is:twice</code>
+(<a href="links.html#search-words">Links and where they came from</a>).</p>
+</li>
+</ul>
+<h3 id="moving-things-in-and-out">Moving things in and out</h3>
+<ul>
+<li><strong>Bring in</strong> (a <strong>dig</strong>): bringing in what you kept in another tool (a Pocket export, a
+browser&#39;s bookmarks, or Google Keep&#39;s notes) at the time you saved it there, so it arrives as years of layers rather
+than all today (<a href="bring-in.html">Bring in</a>).</li>
+<li><strong>Export / a <code>.midden</code> file</strong>: everything you keep, in one file you can import anywhere,
+encrypted under a passphrase you choose (<a href="backup.html">Backup</a>).</li>
+<li><strong>Sync</strong>: your browsers kept in step through a hidden app folder in your own Google Drive,
+encrypted on your device first (<a href="sync.html">Google Drive sync</a>).</li>
+<li><strong>Tombstone</strong>: the record a deletion leaves, so it holds across browsers. Without it, the
+next merge from a browser that still had the item would bring it back.</li>
+<li><strong>Delivery / People</strong>: sending items to people you&#39;ve added. Each person keeps a mailbox in
+their own Drive, and nobody writes into anyone else&#39;s (<a href="delivery.html">Delivery between people</a>).</li>
+</ul>
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="hoard-security.html"><span>Previous</span>The hoard</a><a class="next" rel="next" href="consolidate.html"><span>Next</span>Consolidate</a></nav>
+  </main>
+  <footer>
+    <span>midden</span><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a><a href="mailto:support@yourmidden.app">support@yourmidden.app</a>
+    <span class="right">This site has no trackers.</span>
+  </footer>
+</div>
+</body>
+</html>

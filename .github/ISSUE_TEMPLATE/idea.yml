@@ -1,0 +1,12 @@
+name: An idea
+description: Something midden could do.
+body:
+  - type: markdown
+    attributes:
+      value: Issues here are public. Please don't paste anything from your own heap.
+  - type: textarea
+    id: what
+    attributes:
+      label: What would you want it to do, and what are you trying to get done?
+    validations:
+      required: true

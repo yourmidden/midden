@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; media-src 'self'; style-src 'self'; font-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="description" content="Save your stuff. It stays yours. midden runs on your device, with no account and no server of ours.">
+<title>midden: keep everything, see what connects</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/icon-16.png">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/icon-48.png">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/e.css">
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="home" href="#"><div class="mark"></div><div class="name">midden</div></a>
+    <div class="links">
+      <a class="wide" href="#yours">Yours</a><a class="wide" href="#tap">How it works</a><a class="wide" href="#dig">Bring your pile</a><a class="wide" href="#map">The map</a><a href="#price">Pricing</a><a href="docs/">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="lead">
+      <div>
+        <div class="bigmark"><div class="glow"></div><img src="assets/logo-dark.svg" alt="" width="340" height="340"></div>
+        <div class="formula">r = a·e<sup>bθ</sup></div>
+      </div>
+      <div>
+        <h1>Save your stuff.<br><span>It stays yours.</span></h1>
+        <p>Real value from your own things, without giving any of them up. midden runs on your device, with no account and no server of ours. What you keep, and what it works out from it, is yours alone.</p>
+        <div class="cta">
+          <span class="btn primary">Coming soon</span>
+          <a class="btn" href="#price">$39 for a year of updates</a>
+        </div>
+        <div class="small">A preview: midden isn't on sale yet. No account to make. Nothing you save ever comes to us.</div>
+      </div>
+    </div>
+  </header>
+
+  <section id="yours">
+    <div class="yours">
+      <div>
+        <img class="scene" src="assets/art/home.svg" alt="" aria-hidden="true">
+        <h2>Yours, not ours</h2>
+        <p class="lede">midden is our kick at something simple: bringing you value without you selling
+          what you put in. Your thoughts should be your own. So midden isn't a service. It does its
+          thinking on your device, and what you do in it is only there to help you.</p>
+      </div>
+      <ul>
+        <li><b>On your devices.</b> What you save, and everything midden works out from it.</li>
+        <li><b>Sync through your own Drive.</b> Encrypted on your device first.</li>
+        <li><b>We don't harvest it, and we don't sell it.</b> No analytics on what you save, no
+          training on it, no ads.</li>
+        <li><b>It keeps working without us.</b> If we disappeared tomorrow, midden and your heap would
+          still be there. Export always works.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="demo">
+    <div class="frame"><video class="auto" muted playsinline loop preload="metadata" poster="assets/story/hero.jpg"><source src="assets/story/hero.mp4" type="video/mp4"><source src="assets/story/hero.webm" type="video/webm"></video></div>
+    <p class="answer">Filmed in midden itself, on a made-up heap.</p>
+  </section>
+
+  <section id="how">
+    <div class="story">
+      <p>A midden is a heap nobody sorted: the pile archaeologists dig through, years later, to
+        learn how people lived.</p>
+      <p class="soft">Most of what we save is like that. A link to read later, a screenshot of a
+        receipt, a note at midnight. Filing it all is a chore nobody keeps up. So don't. Keep it,
+        and let midden do the digging.</p>
+    </div>
+  </section>
+
+  <section id="tap">
+    <img class="scene" src="assets/art/parked.svg" alt="" aria-hidden="true">
+    <h2>A feature gets parked</h2>
+    <p class="lede">Nobody plans this. You're deep in something, it stalls, and other work piles on
+      top. While it lasted, you dropped things on the pile as they came. That was enough.</p>
+    <div class="ledger" role="table" aria-label="What you saved, and what midden did with it">
+      <div class="row head" role="row"><span></span><span>You drop it on the pile</span><span>Afterwards, midden</span></div>
+      <div class="row" role="row"><span class="d">Aug 17</span><span class="you">"Starting on resumable uploads. Split big files into parts…"</span><span class="mid">keeps it</span></div>
+      <div class="row" role="row"><span class="d">Aug 18</span><span class="you">An article: <em>Why your keep-alive connections get reset</em></span><span class="mid">keeps it</span></div>
+      <div class="row" role="row"><span class="d">Aug 19</span><span class="you">A screenshot of the test run: <em>ECONNRESET in upload retry</em></span><span class="mid"><b>reads the error off the screenshot</b></span></div>
+      <div class="row" role="row"><span class="d">Aug 20</span><span class="you">The retry wrapper, pasted in: "backoff doesn't help, same socket?"</span><span class="mid">keeps it</span></div>
+      <div class="row" role="row"><span class="d">Aug 21</span><span class="you">A voice note on a walk: "What if the load balancer is closing idle sockets before we do?"</span><span class="mid"><b>writes out what you said</b></span></div>
+      <div class="row" role="row"><span class="d">Aug 22</span><span class="you">"Priya Nair says the load balancer idle timeout is 60 seconds. Ours is 75."</span><span class="mid">keeps it</span></div>
+      <div class="row" role="row"><span class="d">Aug 23</span><span class="you with"><img src="assets/story/board.jpg" width="480" height="312" alt="A whiteboard about resumable uploads" loading="lazy">A photo of the whiteboard</span><span class="mid"><b>reads the words off the photo</b></span></div>
+      <div class="row" role="row"><span class="d">Aug 24</span><span class="you">"Parking resumable uploads. Keep-alive down to 55 stopped the flake, but the rest is blocked until the proxy upgrade lands."</span><span class="mid">keeps it</span></div>
+    </div>
+  </section>
+
+  <section class="demo" id="later">
+    <img class="scene c" src="assets/art/found.svg" alt="" aria-hidden="true">
+    <h2 class="c">Two months later, you've forgotten all of it</h2>
+    <p class="lede c">Ask the way you'd ask yourself.</p>
+    <div class="ledger" role="table" aria-label="Questions and what comes back">
+      <div class="row head" role="row"><span></span><span>You ask</span><span>What comes back</span></div>
+      <div class="row" role="row"><span class="d"></span><span class="you">what was blocking uploads</span><span class="mid">The note where you parked it, the whiteboard, and how it started</span></div>
+      <div class="row" role="row"><span class="d"></span><span class="you">why is keep-alive set to 55</span><span class="mid">The parked note, and the article behind it</span></div>
+      <div class="row" role="row"><span class="d"></span><span class="you">load balancer idea from my walk</span><span class="mid">The voice note, and what Priya said</span></div>
+    </div>
+  </section>
+
+  <section id="dig" class="split">
+    <div>
+      <img class="scene" src="assets/art/barrow.svg" alt="" aria-hidden="true">
+      <p class="kicker">You already have a midden</p>
+      <h2>Bring your old pile</h2>
+      <p class="lede">Drop in your Pocket export, your Google Keep notes or your bookmarks. Everything
+        lands in the year you saved it, so you start with a decade of layers, not an empty box.</p>
+      <p class="fine">Then midden reads back what came up. If you change your mind, you can take the
+        whole dig back out.</p>
+    </div>
+    <div class="frame"><video class="auto" muted playsinline loop preload="none" poster="assets/clips/dig.jpg"><source src="assets/clips/dig.mp4" type="video/mp4"><source src="assets/clips/dig.webm" type="video/webm"></video></div>
+  </section>
+
+  <section id="map">
+    <img class="scene" src="assets/art/stars.svg" alt="" aria-hidden="true">
+    <h2>See the whole heap</h2>
+    <p class="lede">Everything you've kept, laid out by what it has in common. Things that are alike
+      sit together, with nobody sorting them.</p>
+    <div class="pair">
+      <figure><div class="frame"><video class="auto" muted playsinline loop preload="none" poster="assets/clips/map.jpg"><source src="assets/clips/map.mp4" type="video/mp4"><source src="assets/clips/map.webm" type="video/webm"></video></div>
+        <figcaption><b>Search lights it up.</b> Ask something and what's close glows.</figcaption></figure>
+      <figure><div class="frame"><video class="auto" muted playsinline loop preload="none" poster="assets/clips/time.jpg"><source src="assets/clips/time.mp4" type="video/mp4"><source src="assets/clips/time.webm" type="video/webm"></video></div>
+        <figcaption><b>Replay it.</b> Watch your heap grow, month by month.</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="why">
+    <img class="scene" src="assets/art/label.svg" alt="" aria-hidden="true">
+    <h2>It shows its working</h2>
+    <p class="lede">midden tells you why something came up, and says when it isn't sure.</p>
+    <div class="grid">
+      <div class="tile"><h3>Every result says why</h3><p><span class="chip">close in meaning</span>
+        or the words that matched, on the card.</p></div>
+      <div class="tile"><h3>A guess looks like a guess</h3><p>Weaker matches stay folded away, marked
+        <em>midden is less sure about these</em>.</p></div>
+      <div class="tile"><h3>You decide what's true</h3><p>Tags are yours. midden offers, and never
+        files anything for you.</p></div>
+    </div>
+    <div class="words">
+      <span>When you know what you want:</span>
+      <code>$&gt;100</code><code>@Dave</code><code>#recipes</code><code>site:</code><code>from:bookmarks</code><code>is:unread</code><code>is:unseen</code>
+    </div>
+  </section>
+
+  <section id="locked" class="split">
+    <div>
+      <img class="scene" src="assets/art/chest.svg" alt="" aria-hidden="true">
+      <p class="kicker">Things that shouldn't be in the pile</p>
+      <h2>It notices secrets</h2>
+      <p class="lede">Save a password in a note and midden says so, then offers to move it into the
+        hoard, the locked side of midden.</p>
+      <p class="fine">It's a set of rules and it can miss things. No flag doesn't mean something is
+        safe to leave out.</p>
+    </div>
+    <div class="frame"><video class="auto" muted playsinline loop preload="none" poster="assets/clips/sensitive.jpg"><source src="assets/clips/sensitive.mp4" type="video/mp4"><source src="assets/clips/sensitive.webm" type="video/webm"></video></div>
+  </section>
+
+  <section id="gather" class="split flip">
+    <div class="frame"><video class="auto" muted playsinline loop preload="none" poster="assets/story/group.jpg"><source src="assets/story/group.mp4" type="video/mp4"><source src="assets/story/group.webm" type="video/webm"></video></div>
+    <div>
+      <img class="scene" src="assets/art/basket.svg" alt="" aria-hidden="true">
+      <p class="kicker">Gather it up</p>
+      <h2>Nine scattered things, one card</h2>
+      <p class="lede">Tag what belongs and consolidate it. Notes, links, screenshots and voice notes
+        from those weeks become a single card, each one kept as it is.</p>
+      <p class="fine">Nothing is lost, and you can take it apart again whenever you like.</p>
+    </div>
+  </section>
+
+  <section id="more">
+    <h2>And it comes back</h2>
+    <div class="grid">
+      <div class="tile"><h3>Goes with this week</h3><p>Forgotten things that connect to what you saved
+        in the last few days, brought back.</p></div>
+      <div class="tile"><h3>Reminders</h3><p>On anything, repeating if you like, on your computer and
+        your phone.</p></div>
+      <div class="tile"><h3>Your phone</h3><p>Share anything into midden on Android, then search it and
+        sync it with your computer.</p></div>
+      <div class="tile"><h3>Between people</h3><p>Send things to people you've added, sealed for them,
+        through your own Drive.</p></div>
+    </div>
+  </section>
+
+  <section id="price">
+    <img class="scene c" src="assets/art/coin.svg" alt="" aria-hidden="true">
+    <h2 class="c">What it will cost</h2>
+    <p class="lede c">Your money pays for midden. What you put in stays yours.</p>
+    <div class="price">
+      <div class="amount"><span>$39</span><small> for a year of updates</small></div>
+      <ul>
+        <li>Free for 30 days, everything on. After that, saving new things needs a key. What you've
+          saved stays yours to read, search and export.</li>
+        <li>One payment. Nothing renews by itself.</li>
+        <li>Stop whenever you like and everything you have keeps working.</li>
+        <li>The hoard and the Android app are included.</li>
+      </ul>
+      <span class="btn primary">Coming soon</span>
+    </div>
+  </section>
+
+  <footer>
+    <span>midden</span><a href="docs/">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a><a href="mailto:support@yourmidden.app">support@yourmidden.app</a>
+    <span class="right">This site has no trackers.</span>
+  </footer>
+</div>
+<script src="assets/e.js"></script>
+</body>
+</html>

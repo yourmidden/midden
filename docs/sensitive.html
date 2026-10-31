@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Might be sensitive · midden</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/icon-16.png">
+<link rel="icon" type="image/png" sizes="48x48" href="../assets/icon-48.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="home" href="../index.html"><div class="mark"></div><div class="name">midden</div></a>
+    <div class="links"><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a></div>
+  </nav>
+  <main class="page">
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="markdown.html"><span>Previous</span>Markdown notes</a><a class="next" rel="next" href="backup.html"><span>Next</span>Backup</a></nav>
+    <img class="scene" src="../assets/art/found.svg" alt="" aria-hidden="true">
+<h1 id="might-be-sensitive">Might be sensitive</h1>
+<p>midden checks what&#39;s in the heap for things that look like secrets: a password, a key, backup
+codes, a recovery phrase, a link that carries a token. It tells you, and you decide. You can
+move the item to the hoard, or say it&#39;s fine. It&#39;s a set of rules, not a model, and it can
+miss things. Nothing that isn&#39;t marked has been found to be safe.</p>
+<h2 id="what39s-checked">What&#39;s checked</h2>
+<p>Everything in the heap, on every device, as it comes in and again when its text is read:</p>
+<ul>
+<li><strong>a text item</strong>, by its words;</li>
+<li><strong>a link</strong>, by its address;</li>
+<li><strong>a picture or a recording</strong>, by the text read from it (its OCR text, its QR codes, its
+transcript), once that&#39;s been read. The phone reads none itself; it checks what the desktop
+read, when it arrives by sync.</li>
+</ul>
+<p>Locked cards are skipped (they&#39;re in the hoard already), and so are notes on items, for now.
+The rules are the same ones Bring in uses before a dig (listed in <a href="bring-in.html#what-looks-like-a-secret">Bring in</a>), plus two for what a QR code says: a
+two-factor setup (<code>otpauth://…secret=</code>) and a Wi-Fi password (<code>WIFI:…P:…</code>). A note with a link
+in it is checked by the link too.</p>
+<h2 id="strong-and-weak">Strong and weak</h2>
+<p>Measured on 5,145 links from one person&#39;s browser history (October 2026): 118 were flagged, and most of
+them were a checkout&#39;s or a sign-in&#39;s token, most likely used up by the time anyone saves
+them. So each finding has a tier:</p>
+<ul>
+<li><strong>Weak:</strong> a session id (<code>sessionID=</code>, <code>session=</code>), a sign-in <code>code=</code> on an OAuth path, a
+<code>token=</code> on a shop&#39;s checkout, cart or order page.</li>
+<li><strong>Strong:</strong> everything else. A strong finding anywhere in a link wins over a weak one.</li>
+</ul>
+<h2 id="how-it-shows">How it shows</h2>
+<ul>
+<li><strong>A strong one</strong> puts a strip across the top of its card: &quot;might be sensitive&quot;, why, and
+<strong>to the hoard</strong> and <strong>it&#39;s fine</strong>. The heap&#39;s line counts it: &quot;2 items might be
+sensitive. review&quot;.</li>
+<li><strong>A weak one</strong> leaves its card alone. With no strong ones left, the line counts the weak
+ones, muted: &quot;14 items might carry a used-up token. review&quot;.</li>
+<li><strong>✕ on the line</strong> puts it away until there are more.</li>
+<li><strong>Review</strong> is a lens, like a dig&#39;s: a &quot;might be sensitive&quot; chip, the strong ones first. The
+weak ones are folded (&quot;probably expired: 14 sign-in and checkout links…&quot;) until you
+<strong>show</strong> them, or say <strong>they&#39;re fine</strong> all at once. With no strong ones, review shows the
+weak ones straight away.</li>
+<li><strong><code>is:sensitive</code></strong> in search finds both tiers, any time (desktop).</li>
+<li><strong>To the hoard</strong> opens the card&#39;s move to the hoard, the same move as its
+⋯ menu. On the phone it says to move it from the computer.</li>
+<li><strong>It&#39;s fine</strong> puts it away for good, on every device. It&#39;s kept by
+the item&#39;s content hash, so a different item with the same words is the same item.</li>
+<li>A flagged link, strong or weak, is never fetched for its preview
+(<a href="link-previews.html">Link previews</a>).</li>
+</ul>
+<p>Not marked yet: the map&#39;s cards, the opened item, and the links arrangement&#39;s rows. The strip
+is on the list&#39;s cards, on the desktop and the phone.</p>
+<h2 id="what39s-stored">What&#39;s stored</h2>
+<p>Nothing about what was found. Findings are worked out from the item each time the heap
+loads (about 5 µs a link, measured), so a change to the rules applies to everything at once.
+What you said is fine is stored as the item&#39;s hash and a time, synced (as <code>cleared</code> in the
+change logs) and kept in backups.</p>
+<nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="markdown.html"><span>Previous</span>Markdown notes</a><a class="next" rel="next" href="backup.html"><span>Next</span>Backup</a></nav>
+  </main>
+  <footer>
+    <span>midden</span><a href="index.html">Docs</a><a href="https://github.com/yourmidden/midden/issues/new/choose">Report an issue</a><a href="mailto:support@yourmidden.app">support@yourmidden.app</a>
+    <span class="right">This site has no trackers.</span>
+  </footer>
+</div>
+</body>
+</html>
