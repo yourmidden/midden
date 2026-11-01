@@ -30,8 +30,12 @@ person&#39;s midden collects it from there. Nobody ever writes into anyone else&
 <h3 id="adding-someone">Adding someone</h3>
 <ul>
 <li>First contact is <strong>mutual</strong>: you scan their card and they scan yours, or you send a card
-each way. Comparing the <strong>safety number</strong> on both screens proves each card really came
-from the other person.</li>
+each way. On the phone, <strong>add someone</strong> asks how you&#39;re doing it, then walks you through it:
+one of you shows first and the other scans first, so you swap places in the middle.</li>
+<li>Set up delivery <strong>before</strong> you swap: your card says where people fetch from, and a card made
+without it can&#39;t bring you anything later.</li>
+<li>Comparing the <strong>safety number</strong> on both screens comes last, because it needs both cards. It
+proves each card really came from the other person.</li>
 <li>A card carries the person&#39;s public keys and the address of their <code>hello</code> folder.</li>
 <li>From a card alone you can&#39;t send anything to a stranger: midden only accepts messages from
 people you&#39;ve added.</li>
@@ -51,11 +55,50 @@ it by link, and hands them its ID in a sealed <code>mailbox</code> message (post
 <li>From then on, what you send them goes there, and they read it from there.</li>
 <li>Until they&#39;ve confirmed the handover, things still go through <code>hello/</code>, so sending right
 after adding someone works.</li>
+<li>If either side loses track (you remove someone and add them back, restore a backup, or
+delete the folder from Drive), the folders are handed over again by themselves.</li>
 </ul>
 </li>
-<li>Folders are named with a random ID, because a link-shared folder&#39;s name is visible to
-whoever holds the link. A Drive description that only you can see (&quot;midden: Sam&quot;) tells
-you whose is whose.</li>
+<li>Folders are named with a random ID and carry no description, because whoever holds a
+link-shared folder&#39;s link can read both. midden keeps who each one is for in its own app
+properties, so in Drive you can&#39;t tell whose is whose.</li>
+</ul>
+<h3 id="checking-it-works">Checking it works</h3>
+<p>Setting up delivery tests your mailbox the way a contact reaches it: midden posts a small file
+in <code>hello/</code>, lists and fetches it without signing in, and takes it down. Each device tests once
+(a mailbox set up earlier is tested at its next check), and keeps testing while it&#39;s failing.
+<strong>People</strong> shows the result, along with any trouble from the last check, and <strong>check again</strong> runs
+another. It says you&#39;re reachable, not that a particular contact has added you.</p>
+<h3 id="if-your-mailbox-folder-is-moved-to-the-trash-or-deleted">If your mailbox folder is moved to the trash or deleted</h3>
+<p>Every check also looks for your folders in Drive.</p>
+<ul>
+<li><strong>In the trash:</strong> midden stops posting and offers <strong>restore it</strong> in People, rather than doing it
+for you, since you may have meant to. Your folders come back unchanged, so your card still
+works. What people send you still arrives meanwhile. Drive empties its trash after 30 days.</li>
+<li><strong>Deleted for good:</strong> midden offers <strong>set up again</strong>, which makes a new mailbox with a new
+address. People you&#39;ve added can&#39;t find it from the old card, so swap cards with them again.</li>
+<li><strong>One contact&#39;s folder:</strong> a new one is made and handed over to them by itself.</li>
+</ul>
+<h3 id="sending-something">Sending something</h3>
+<p>Use <strong>send</strong> on a card (in its <strong>⋯</strong>). The same screen opens on the phone and the desktop:</p>
+<ul>
+<li><strong>Who it goes to:</strong> pick one person or several. Each gets their own sealed copy. Anyone you
+haven&#39;t compared safety numbers with shows as <strong>not verified</strong>.</li>
+<li><strong>A message:</strong> optional, up to 2,000 characters, and the same for everyone you picked.</li>
+<li><strong>What goes:</strong> the item, where it came from, the text midden read from it (a transcript, the
+words in a picture), and your message. Your tags, notes and reminders stay with you.</li>
+</ul>
+<p>A send is a copy: it&#39;s theirs once it arrives, and you can&#39;t change it or take it back. If
+delivery isn&#39;t set up between you, the screen gives you the sealed copy to pass on yourself, to
+paste into a chat or save as a file.</p>
+<h3 id="when-something-arrives">When something arrives</h3>
+<ul>
+<li>It waits in <strong>People</strong> for your OK, with the sender&#39;s message, and nothing enters your midden
+until you take it. The <strong>people</strong> icon in the header counts what&#39;s waiting.</li>
+<li>Once you take it, the card keeps the sender&#39;s colour along its edge, their initial, and &quot;from&quot;
+their name. Their message stays on the card as their words, separate from your notes, so
+you can&#39;t edit it. It syncs to your devices with the item, and you can search for it.</li>
+<li>If you decline, the item and its message are dropped.</li>
 </ul>
 <h3 id="sending-and-receiving">Sending and receiving</h3>
 <ol>
@@ -72,15 +115,17 @@ them (<code>&lt;mailbox&gt;.&lt;id&gt;.r.&lt;item id&gt;</code>).</li>
 is gone, you take your receipt down. Everything clears itself, from listings alone, on
 whichever device checks first.<ul>
 <li>What nobody picks up is taken down after 14 days.</li>
-<li>Removing a contact deletes their folder, and everything in it.</li>
+<li>Removing a contact deletes their folder, and everything in it. Whichever of your devices
+has heard of the removal does it; a device that simply hasn&#39;t met them yet leaves it alone.</li>
 </ul>
 </li>
 </ol>
 <h3 id="when-it-runs">When it runs</h3>
 <ul>
 <li><strong>Checking:</strong> when midden opens or the browser starts, every 10 minutes while the browser
-is open, and straight away after you send something. Never more than once a minute,
-except after a send.</li>
+is open, every 2 minutes while the phone app is on screen, and straight away after you send
+something. Never more than once a minute, except after a send.</li>
+<li><strong>What&#39;s waiting</strong> shows as a count on the <strong>people</strong> icon in the header.</li>
 <li><strong>Your other devices</strong> read the same folders, through your synced contacts. Whichever device
 adds a contact makes their folder, so there&#39;s never a second one.</li>
 </ul>
@@ -150,7 +195,12 @@ much, to anyone who holds that folder&#39;s ID (Google included).</li>
 what arrives. There&#39;s no remote wipe, and no way yet to replace your card and keys.</li>
 <li><strong>Message size:</strong> one message carries up to 100 MB. Anything bigger posted into a folder is
 ignored, not fetched.</li>
-<li><strong>No arrival alert on the phone yet:</strong> items arrive at the next check, while midden is open.</li>
+<li><strong>Messages and older builds:</strong> someone on a build from before messages still gets the item,
+without your message.</li>
+<li><strong>Being sent something you already have:</strong> the message shows on the card, but search won&#39;t
+find it until midden next rebuilds its text.</li>
+<li><strong>No arrival alert on the phone yet:</strong> items arrive at the next check, while midden is on
+screen or when you open it, and nothing tells you while it&#39;s closed.</li>
 </ul>
 <nav class="pager" aria-label="Docs pages"><a class="prev" rel="prev" href="sync.html"><span>Previous</span>Google Drive sync</a><a class="next" rel="next" href="reading-the-map.html"><span>Next</span>Reading the map</a></nav>
   </main>

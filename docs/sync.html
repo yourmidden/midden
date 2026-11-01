@@ -131,8 +131,8 @@ to the same place from the connect form.</p>
 <td>the sync key, wrapped by your passphrase (Argon2id + AES-256-GCM), and the key&#39;s check mark (SHA-256 of a label and the key, so a device can recognize its key without the passphrase); the same key wrapped by the recovery key, when you made one; no data</td>
 </tr>
 <tr>
-<td><code>blob-&lt;sha256&gt;.enc</code></td>
-<td>each image or file, and each link thumbnail, encrypted, uploaded once; an item&#39;s own file is removed once it&#39;s deleted for good (a thumbnail&#39;s stays)</td>
+<td><code>file-&lt;hmac&gt;.enc</code></td>
+<td>each image or file, and each link thumbnail, encrypted, uploaded once, named by a keyed hash; an item&#39;s own file is removed once it&#39;s deleted for good (a thumbnail&#39;s stays)</td>
 </tr>
 <tr>
 <td><code>hoard-&lt;sha256&gt;.enc</code></td>
@@ -187,9 +187,11 @@ wrong thing.</li>
 <p><strong>What Google can still see:</strong></p>
 <ul>
 <li>how many files there are, their sizes, and when they were written;</li>
-<li>the file names: which device wrote a batch, the batch numbers, and each picture&#39;s or
-file&#39;s SHA-256. The hash reveals whether two uploads are the same file, but nothing about
-what it contains.</li>
+<li>the file names: which device wrote a batch and the batch numbers. A picture&#39;s or file&#39;s name
+is keyed (an HMAC of its hash under a key derived from the sync key), so it says nothing about
+what&#39;s in it, and without the key it can&#39;t be matched against a file someone else has. Files
+from before that had a plain SHA-256 in their name, which would let anyone who can list the
+store test whether it holds a file they also have; each sync renames a few until none are left.</li>
 </ul>
 <p><strong>What&#39;s kept on the device:</strong></p>
 <ul>
@@ -199,8 +201,9 @@ while you&#39;re signed in to Google in that browser. The phone gets its token f
 services and holds it in memory for 45 minutes at most.</li>
 <li><strong>No client secret</strong> exists anywhere: the extension uses the browser&#39;s sign-in flow and
 the phone uses Play services.</li>
-<li><strong>The unwrapped sync key</strong> stays in this browser profile (or the phone&#39;s app storage), so
-sync can run in the background without asking for the passphrase. midden&#39;s data is stored
+<li><strong>The unwrapped sync key</strong> stays in this browser profile (or the phone&#39;s app storage), in
+midden&#39;s database, so sync can run in the background without asking for the passphrase. That
+database is in midden&#39;s own origin, out of reach of anything injected into a web page. midden&#39;s data is stored
 unencrypted in the same place anyway: the encryption protects the Drive copy, not the
 device. Someone with your unlocked device has your midden.</li>
 </ul>
@@ -211,6 +214,13 @@ device. Someone with your unlocked device has your midden.</li>
 shut out a lost device, start over with a new passphrase: it can&#39;t read anything written
 after that.</li>
 <li>A device&#39;s clock decides which of two conflicting edits wins.</li>
+<li>What you delete, or move to the hoard, stays in older sync files, encrypted under the sync key,
+until the device that wrote them next rewrites its own. A device you no longer use never does:
+<strong>remove…</strong> in <strong>Settings → Sync → Devices</strong> takes its files out.</li>
+<li>Anyone who can write to the app folder (Google, or someone with a stolen token) can&#39;t forge or
+change anything, but can delete files or plant junk. A file the key doesn&#39;t open is reported
+and left out, and never holds back the genuine ones around it, nor does a junk file&#39;s name
+affect this device&#39;s numbering.</li>
 <li>The recovery sheet, with access to your Google account, reads your synced midden. Keep it
 like a passport. Without it and without the passphrase, the Drive copy can&#39;t be read; what&#39;s
 on your devices stays.</li>
